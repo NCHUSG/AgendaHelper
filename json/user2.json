@@ -1,0 +1,159 @@
+{
+    "name": "黃翔宇",
+    "time_table": [{
+        "class": "2",
+        "code": "2292",
+        "credits": "3",
+        "credits_parsed": 3,
+        "department": "資工系",
+        "for_dept": "資訊科學與工程學系學士班",
+        "hours": "3",
+        "hours_parsed": 3,
+        "intern_location": [""],
+        "intern_time": "",
+        "language": "中文",
+        "location": ["S101"],
+        "note": "",
+        "number": "55",
+        "number_parsed": 55,
+        "obligatory": "必修",
+        "obligatory_tf": true,
+        "previous": "",
+        "professor": "洪國寶",
+        "time": "1234",
+        "time_parsed": [{
+            "day": 1,
+            "time": [2, 3, 4]
+        }],
+        "title": "線性代數 `Linear Algebra",
+        "title_parsed": {
+            "en_US": "Linear Algebra",
+            "zh_TW": "線性代數"
+        },
+        "year": "半"
+    }, {
+        "class": "2",
+        "code": "2293",
+        "credits": "3",
+        "credits_parsed": 3,
+        "department": "資工系",
+        "for_dept": "資訊科學與工程學系學士班",
+        "hours": "3",
+        "hours_parsed": 3,
+        "intern_location": [""],
+        "intern_time": "",
+        "language": "中文",
+        "location": ["S1001"],
+        "note": "",
+        "number": "75",
+        "number_parsed": 75,
+        "obligatory": "必修",
+        "obligatory_tf": true,
+        "previous": "",
+        "professor": "張延任",
+        "time": "3234",
+        "time_parsed": [{
+            "day": 3,
+            "time": [2, 3, 4]
+        }],
+        "title": "邏輯設計 `Logic Design",
+        "title_parsed": {
+            "en_US": "Logic Design",
+            "zh_TW": "邏輯設計"
+        },
+        "year": "半"
+    }, {
+        "class": "2",
+        "code": "2294",
+        "credits": "3",
+        "credits_parsed": 3,
+        "department": "資工系",
+        "for_dept": "資訊科學與工程學系學士班",
+        "hours": "3",
+        "hours_parsed": 3,
+        "intern_location": [""],
+        "intern_time": "",
+        "language": "中文",
+        "location": ["S1001"],
+        "note": "",
+        "number": "93",
+        "number_parsed": 93,
+        "obligatory": "必修",
+        "obligatory_tf": true,
+        "previous": "",
+        "professor": "余明興",
+        "time": "2234",
+        "time_parsed": [{
+            "day": 2,
+            "time": [2, 3, 4]
+        }],
+        "title": "資料結構 `Data Structures",
+        "title_parsed": {
+            "en_US": "Data Structures",
+            "zh_TW": "資料結構"
+        },
+        "year": "半"
+    }, {
+        "class": "2",
+        "code": "2295",
+        "credits": "3",
+        "credits_parsed": 3,
+        "department": "資工系",
+        "for_dept": "資訊科學與工程學系學士班",
+        "hours": "3",
+        "hours_parsed": 3,
+        "intern_location": [""],
+        "intern_time": "",
+        "language": "中文",
+        "location": ["S701"],
+        "note": "",
+        "number": "80",
+        "number_parsed": 80,
+        "obligatory": "選修",
+        "obligatory_tf": false,
+        "previous": "",
+        "professor": "廖宜恩",
+        "time": "4234",
+        "time_parsed": [{
+            "day": 4,
+            "time": [2, 3, 4]
+        }],
+        "title": "正規語言 `Formal Languages",
+        "title_parsed": {
+            "en_US": "Formal Languages",
+            "zh_TW": "正規語言"
+        },
+        "year": "半"
+    }, {
+        "class": "3",
+        "code": "3337",
+        "credits": "3",
+        "credits_parsed": 3,
+        "department": "資工系",
+        "for_dept": "資訊科學與工程學系學士班",
+        "hours": "3",
+        "hours_parsed": 3,
+        "intern_location": [""],
+        "intern_time": "",
+        "language": "中文",
+        "location": ["S102"],
+        "note": "",
+        "number": "60",
+        "number_parsed": 60,
+        "obligatory": "選修",
+        "obligatory_tf": false,
+        "previous": "",
+        "professor": "陳煥",
+        "time": "3567",
+        "time_parsed": [{
+            "day": 3,
+            "time": [5, 6, 7]
+        }],
+        "title": "無線網路概論 `Introduction to Wireless Networks",
+        "title_parsed": {
+            "en_US": "Introduction to Wireless Networks",
+            "zh_TW": "無線網路概論"
+        },
+        "year": "半"
+    }]
+}
