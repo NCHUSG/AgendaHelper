@@ -1,0 +1,230 @@
+{
+    "name": "張泰瑋",
+    "time_table": [{
+        "class": "1",
+        "code": "1029",
+        "credits": "0",
+        "credits_parsed": 0,
+        "department": "學務處",
+        "for_dept": "資訊科學與工程學系學士班",
+        "hours": "2",
+        "hours_parsed": 2,
+        "intern_location": [""],
+        "intern_time": "",
+        "language": "中文",
+        "location": [""],
+        "note": "資工系",
+        "number": "200",
+        "number_parsed": 200,
+        "obligatory": "必修",
+        "obligatory_tf": true,
+        "previous": "",
+        "professor": "全體教師",
+        "time": "489",
+        "time_parsed": [{
+            "day": 4,
+            "time": [8, 9]
+        }],
+        "title": "服務學習(一)：勞作教育 d`Service-Learning I :Student Labor Education and Work-Study Management",
+        "title_parsed": {
+            "en_US": "Service-Learning I :Student Labor Education and Work-Study Management",
+            "zh_TW": "服務學習(一)：勞作教育 d"
+        },
+        "year": "半"
+    }, {
+        "class": "1",
+        "code": "1226",
+        "credits": "3",
+        "credits_parsed": 3,
+        "department": "應數系",
+        "for_dept": "資訊科學與工程學系學士班",
+        "hours": "3",
+        "hours_parsed": 3,
+        "intern_location": [""],
+        "intern_time": "",
+        "language": "中文",
+        "location": ["S102"],
+        "note": "",
+        "number": "60",
+        "number_parsed": 60,
+        "obligatory": "必修",
+        "obligatory_tf": true,
+        "previous": "",
+        "professor": "許訓評",
+        "time": "234`32",
+        "time_parsed": [{
+            "day": 2,
+            "time": [3, 4]
+        }, {
+            "day": 3,
+            "time": [2]
+        }],
+        "title": "微積分(一) u`Calculus(I)",
+        "title_parsed": {
+            "en_US": "Calculus(I)",
+            "zh_TW": "微積分(一) u"
+        },
+        "year": "半"
+    }, {
+        "class": "1",
+        "code": "1245",
+        "credits": "1",
+        "credits_parsed": 1,
+        "department": "物理系",
+        "for_dept": "資訊科學與工程學系學士班",
+        "hours": "3",
+        "hours_parsed": 3,
+        "intern_location": ["S2A06"],
+        "intern_time": "4567",
+        "language": "中文",
+        "location": [""],
+        "note": "",
+        "number": "70",
+        "number_parsed": 70,
+        "obligatory": "必修",
+        "obligatory_tf": true,
+        "previous": "",
+        "professor": "陳光胤",
+        "time": "",
+        "time_parsed": [{
+            "day": 4,
+            "time": [5, 6, 7]
+        }],
+        "title": "普通物理學實驗 h`General Physics Lab",
+        "title_parsed": {
+            "en_US": "General Physics Lab",
+            "zh_TW": "普通物理學實驗 h"
+        },
+        "year": "全"
+    }, {
+        "class": "1",
+        "code": "1255",
+        "credits": "3",
+        "credits_parsed": 3,
+        "department": "物理系",
+        "for_dept": "資訊科學與工程學系學士班",
+        "hours": "3",
+        "hours_parsed": 3,
+        "intern_location": [""],
+        "intern_time": "",
+        "language": "中文",
+        "location": ["S102"],
+        "note": "",
+        "number": "60",
+        "number_parsed": 60,
+        "obligatory": "必修",
+        "obligatory_tf": true,
+        "previous": "",
+        "professor": "劉瑞堂",
+        "time": "11`434",
+        "time_parsed": [{
+            "day": 1,
+            "time": [1]
+        }, {
+            "day": 4,
+            "time": [3, 4]
+        }],
+        "title": "普通物理學 b`General Physics",
+        "title_parsed": {
+            "en_US": "General Physics",
+            "zh_TW": "普通物理學 b"
+        },
+        "year": "全"
+    }, {
+        "class": "1",
+        "code": "1279",
+        "credits": "3",
+        "credits_parsed": 3,
+        "department": "資工系",
+        "for_dept": "資訊科學與工程學系學士班",
+        "hours": "3",
+        "hours_parsed": 3,
+        "intern_location": [""],
+        "intern_time": "",
+        "language": "中文",
+        "location": ["S1001"],
+        "note": "",
+        "number": "45",
+        "number_parsed": 45,
+        "obligatory": "必修",
+        "obligatory_tf": true,
+        "previous": "",
+        "professor": "王宗銘",
+        "time": "1567",
+        "time_parsed": [{
+            "day": 1,
+            "time": [5, 6, 7]
+        }],
+        "title": "計算機程式設計 `Computer Programming",
+        "title_parsed": {
+            "en_US": "Computer Programming",
+            "zh_TW": "計算機程式設計"
+        },
+        "year": "半"
+    }, {
+        "class": "1",
+        "code": "1280",
+        "credits": "3",
+        "credits_parsed": 3,
+        "department": "資工系",
+        "for_dept": "資訊科學與工程學系學士班",
+        "hours": "3",
+        "hours_parsed": 3,
+        "intern_location": [""],
+        "intern_time": "",
+        "language": "中文",
+        "location": ["S1001"],
+        "note": "",
+        "number": "82",
+        "number_parsed": 82,
+        "obligatory": "必修",
+        "obligatory_tf": true,
+        "previous": "",
+        "professor": "高勝助",
+        "time": "278`31",
+        "time_parsed": [{
+            "day": 2,
+            "time": [7, 8]
+        }, {
+            "day": 3,
+            "time": [1]
+        }],
+        "title": "離散數學 `Discrete Mathematics",
+        "title_parsed": {
+            "en_US": "Discrete Mathematics",
+            "zh_TW": "離散數學"
+        },
+        "year": "半"
+    }, {
+        "class": "1",
+        "code": "1281",
+        "credits": "3",
+        "credits_parsed": 3,
+        "department": "資工系",
+        "for_dept": "資訊科學與工程學系學士班",
+        "hours": "3",
+        "hours_parsed": 3,
+        "intern_location": [""],
+        "intern_time": "",
+        "language": "中文",
+        "location": ["S1001"],
+        "note": "",
+        "number": "60",
+        "number_parsed": 60,
+        "obligatory": "必修",
+        "obligatory_tf": true,
+        "previous": "",
+        "professor": "曾學文",
+        "time": "1234",
+        "time_parsed": [{
+            "day": 1,
+            "time": [2, 3, 4]
+        }],
+        "title": "計算機導論 `Introduction to Computer Science",
+        "title_parsed": {
+            "en_US": "Introduction to Computer Science",
+            "zh_TW": "計算機導論"
+        },
+        "year": "半"
+    }]
+}
