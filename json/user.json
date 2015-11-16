@@ -14,15 +14,7 @@
         "language": "中文",
         "location": [""],
         "note": "資工系",
-        "number": "200",
-        "number_parsed": 200,
-        "obligatory": "必修",
-        "obligatory_tf": true,
-        "previous": "",
-        "professor": "全體教師",
-        "time": "489",
-        "time_parsed": [{
-            "day": 4,
+        "numbekkk            "day": 4,
             "time": [8, 9]
         }],
         "title": "服務學習(一)：勞作教育 d`Service-Learning I :Student Labor Education and Work-Study Management",
