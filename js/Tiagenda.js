@@ -445,34 +445,41 @@
                 $target.append($option);        //顯示課程，把$option放到elective-post，append是追加在後面                
                 $('[data-toggle="tooltip"]').tooltip(); //讓tooltip功能綁上去
             };
-            window.cal = function($target){     //用來計算user中,每個時段有幾個人有課的個數  target指$("#time-table")
-                $.each(user,function(uk,uv){
-                    $.each(uv.time_table,function(hk,hv){
-                        $.each(hv.time_parsed,function(ik, iv){
-                            $.each(iv.time,function(jk, jv){
-                                agenda_count[iv.day-1][jv-1]++;//那門課的重疊次數加一                       
-                                //$td.text(count);
-                            });                    
+            var once=1;//判斷是否是第一次按
+            $("#demo").click(function(){   
+                //用來計算user中,每個時段有幾個人有課的個數
+                if(once==1)
+                {
+                    $.each(user,function(uk,uv){
+                        $.each(uv.time_table,function(hk,hv){
+                            $.each(hv.time_parsed,function(ik, iv){
+                                $.each(iv.time,function(jk, jv){
+                                    agenda_count[iv.day-1][jv-1]++;//那門課的重疊次數加一                       
+                                    //$td.text(count);
+                                });                    
+                            });
                         });
                     });
-                });
-                $.each(agenda_count,function(ik,iv){
-                    $.each(iv,function(jk,jv){
-                        var $td = $target.find('tr[data-hour=' + (jk+1) + '] td[data-day=' + (ik+1) + ']');     //將目前所在位置指派給$td
-                        switch(jv)
-                        {
-                            case 0:$td.css("background-color","green");//沒有人有課就會改綠色;
-                            break;
-                            case 1:$td.css("background-color","orange");//有一個人有課就會改橙色;
-                            break;
-                            case 2:$td.css("background-color","red");//有二個人有課來就會改紅色;
-                            break;
-                            default:
-                            break;
-                        }
-                    });  
-                });
-            };
+                    //找尋每個時段有多少人有課的值
+                    $.each(agenda_count,function(ik,iv){
+                        $.each(iv,function(jk,jv){
+                            var $td = $("#time-table").find('tr[data-hour=' + (jk+1) + '] td[data-day=' + (ik+1) + ']');     //將目前所在位置指派給$td
+                            switch(jv)
+                            {
+                                case 0:$td.css("background-color","green");//沒有人有課就會改綠色;
+                                break;
+                                case 1:$td.css("background-color","orange");//有一個人有課就會改橙色;
+                                break;
+                                case 2:$td.css("background-color","red");//有二個人有課來就會改紅色;
+                                break;
+                                default:
+                                break;
+                            }
+                        });  
+                    }); 
+                    once=0;
+                }                
+            });
             window.add_course = function($target, course, language){      //假設target為time-table的參數，course為courses的某一個課程
                 if( !$.isArray(course.time_parsed) )
                     throw 'time_parsed error';      //判斷time-parsed是不是陣列
