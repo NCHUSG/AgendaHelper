@@ -454,7 +454,7 @@
                 if(once==1)
                 {
                     $.each(user,function(uk,uv){
-                        var has_class=[[0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0]];
+                        var has_class=[[0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0]];//是否有課的陣列
                         $.each(uv.time_table,function(hk,hv){
                             $.each(hv.time_parsed,function(ik, iv){
                                 $.each(iv.time,function(jk, jv){
@@ -492,7 +492,7 @@
                                     "data-toggle": "tooltip",
                                     "data-placement": "top",
                                     "title": agenda_name_count[ik][jk],
-                                    "style": "height: 30%;width:100%",
+                                    "style": "height: 80%;width:100%",
                                 });//放上tooltip顯示有誰可到
                                 $td.attr({
                                     "style": "color:#3074B5;background-color:green;height: 1px;",
@@ -502,7 +502,7 @@
                                     "data-toggle": "tooltip",
                                     "data-placement": "top",
                                     "title": agenda_name_count[ik][jk],
-                                    "style": "height: 30%;width:100%",
+                                    "style": "height: 80%;width:100%",
                                 });//放上tooltip顯示有誰可到
                                 $td.attr({
                                     "style": "color:#3074B5;background-color:orange;height: 1px;",
@@ -512,7 +512,7 @@
                                     "data-toggle": "tooltip",
                                     "data-placement": "top",
                                     "title": "沒人可以到QQ",
-                                    "style": "height: 30%;width:100%",
+                                    "style": "height: 80%;width:100%",
                                 });//放上tooltip顯示有誰可到
                                 $td.attr({
                                     "style": "color:#3074B5;background-color:red;height: 1px;",
