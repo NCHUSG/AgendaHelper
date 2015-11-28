@@ -13,7 +13,9 @@
                 window.name_of_optional_obligatory = [] //這是用來存系上的必修課，檢查有沒有課名是重複的，若有就讓使用者自行決定要上哪堂
                 window.json_resource=["json/user.json","json/user2.json"];//temp array,先暫時寫成本地端的陣列，未來會需要用ajax取得資料
                 window.user=[];//this array will be filled with student's json.
-                window.agenda_count=[[0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0]]//Tiagenda的初始值就是每一段時間都沒有被重疊到
+                window.agenda_count=[[0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0]];
+                window.agenda_name_count=[["","","","","","","","","","","","",""],["","","","","","","","","","","","",""],["","","","","","","","","","","","",""],["","","","","","","","","","","","",""],["","","","","","","","","","","","",""]]
+                //Tiagenda的初始值就是每一段時間都沒有被重疊到
                 $.each(window.json_resource,function(kk,kv){
                     $.getJSON(kv, function(json){  //getJSON會用function(X)傳回X的物件或陣列                    
                         window.user.push(json);
@@ -441,44 +443,90 @@
                 $option.find('button').val(course.code);                
                 //把現在找到的這門選修課課程代碼儲存到這個option，並用value表示       
                 //var url=course.url;              
-                $option.find('a').attr('href','https://onepiece.nchu.edu.tw/cofsys/plsql/Syllabus_main_q?v_strm=1041&v_class_nbr=5346');
+                $option.find('a').attr('href','htsps://onepiece.nchu.edu.tw/cofsys/plsql/Syllabus_main_q?v_strm=1041&v_class_nbr=5346');
                 $target.append($option);        //顯示課程，把$option放到elective-post，append是追加在後面                
                 $('[data-toggle="tooltip"]').tooltip(); //讓tooltip功能綁上去
             };
             var once=1;//判斷是否是第一次按
+            window.current_name="" //存放目前json的name
             $("#demo").click(function(){   
                 //用來計算user中,每個時段有幾個人有課的個數
                 if(once==1)
                 {
                     $.each(user,function(uk,uv){
+                        var has_class=[[0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0]];
                         $.each(uv.time_table,function(hk,hv){
                             $.each(hv.time_parsed,function(ik, iv){
                                 $.each(iv.time,function(jk, jv){
-                                    agenda_count[iv.day-1][jv-1]++;//那門課的重疊次數加一                       
-                                    //$td.text(count);
+                                    agenda_count[iv.day-1][jv-1]++;//那門課的重疊次數加一  
+                                    has_class[iv.day-1][jv-1]=1;//判斷是否有課=1               
                                 });                    
+                            });
+                        });
+                        current_name=uv.name    //存放目前json的name
+                        //將有課的時段的tooltip加上名子
+                        $.each(has_class,function(ik,iv){
+                            $.each(iv,function(jk,jv){
+                                if(jv==0&&agenda_name_count[ik][jk]=="")
+                                {
+                                    //將有課的name存入目前時段
+                                    agenda_name_count[ik][jk]+=current_name
+                                }
+                                else if(jv==0)
+                                {
+                                    current_name=","+current_name
+                                    agenda_name_count[ik][jk]+=current_name
+                                    current_name=uv.name
+                                }
                             });
                         });
                     });
                     //找尋每個時段有多少人有課的值
                     $.each(agenda_count,function(ik,iv){
                         $.each(iv,function(jk,jv){
-                            var $td = $("#time-table").find('tr[data-hour=' + (jk+1) + '] td[data-day=' + (ik+1) + ']');     //將目前所在位置指派給$td
+                            var $td = $("#time-table").find('tr[data-hour=' + (jk+1) + '] td[data-day=' + (ik+1) + ']');     //將目前所在的td位置指派給$td    
+                            var $sp = $("#time-table").find('tr[data-hour=' + (jk+1) + '] td[data-day=' + (ik+1) + '] span');//將目前所在的span位置指派給$td
                             switch(jv)
                             {
-                                case 0:$td.css("background-color","green");//沒有人有課就會改綠色;
+                                case 0:$sp.attr({
+                                    "data-toggle": "tooltip",
+                                    "data-placement": "top",
+                                    "title": agenda_name_count[ik][jk],
+                                });//放上tooltip顯示有誰可到
+                                $td.attr({
+                                    "style": "color:#3074B5;background-color:green",
+                                });//沒有人有課就會改綠色;
                                 break;
-                                case 1:$td.css("background-color","orange");//有一個人有課就會改橙色;
+                                case 1:$sp.attr({
+                                    "data-toggle": "tooltip",
+                                    "data-placement": "top",
+                                    "title": agenda_name_count[ik][jk],
+                                });//放上tooltip顯示有誰可到
+                                $td.attr({
+                                    "style": "color:#3074B5;background-color:orange",
+                                });//沒有人有課就會改澄色;
                                 break;
-                                case 2:$td.css("background-color","red");//有二個人有課來就會改紅色;
+                                case 2:$sp.attr({
+                                    "data-toggle": "tooltip",
+                                    "data-placement": "top",
+                                    "title": "沒人可以到QQ",
+                                });//放上tooltip顯示有誰可到
+                                $td.attr({
+                                    "style": "color:#3074B5;background-color:red",
+                                });//沒有人有課就會改紅色;
                                 break;
                                 default:
                                 break;
-                            }
+                            }     
+
+                            //把現在找到的這門選修課課程代碼儲存到這個option，並用value表示       
+                            //var url=course.url;                
+                            $('[data-toggle="tooltip"]').tooltip(); //讓tooltip功能綁上去            
                         });  
+                        
                     }); 
                     once=0;
-                }                
+                }           
             });
             window.add_course = function($target, course, language){      //假設target為time-table的參數，course為courses的某一個課程
                 if( !$.isArray(course.time_parsed) )
@@ -737,7 +785,7 @@
                     bulletin_post($("#natural"), course, language)
                 }
                 else{
-                    alert("有通識課程無法顯示，煩請記下點擊的結束為何並告知開發小組\nFB搜尋：選課小幫手\nhttps://www.facebook.com/CoursePickingHelper")
+                    alert("有通識課程無法顯示，煩請記下點擊的結束為何並告知開發小組\nFB搜尋：選課小幫手\nhtsps://www.facebook.com/CoursePickingHelper")
                 }                
             };
             var check_which_common_subject = function(course){
