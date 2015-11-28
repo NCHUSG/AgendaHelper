@@ -485,34 +485,37 @@
                     $.each(agenda_count,function(ik,iv){
                         $.each(iv,function(jk,jv){
                             var $td = $("#time-table").find('tr[data-hour=' + (jk+1) + '] td[data-day=' + (ik+1) + ']');     //將目前所在的td位置指派給$td    
-                            var $sp = $("#time-table").find('tr[data-hour=' + (jk+1) + '] td[data-day=' + (ik+1) + '] span');//將目前所在的span位置指派給$td
+                            var $sp = $("#time-table").find('tr[data-hour=' + (jk+1) + '] td[data-day=' + (ik+1) + '] div');//將目前所在的span位置指派給$td
                             switch(jv)
                             {
                                 case 0:$sp.attr({
                                     "data-toggle": "tooltip",
                                     "data-placement": "top",
                                     "title": agenda_name_count[ik][jk],
+                                    "style": "height: 30%;width:100%",
                                 });//放上tooltip顯示有誰可到
                                 $td.attr({
-                                    "style": "color:#3074B5;background-color:green",
+                                    "style": "color:#3074B5;background-color:green;height: 1px;",
                                 });//沒有人有課就會改綠色;
                                 break;
                                 case 1:$sp.attr({
                                     "data-toggle": "tooltip",
                                     "data-placement": "top",
                                     "title": agenda_name_count[ik][jk],
+                                    "style": "height: 30%;width:100%",
                                 });//放上tooltip顯示有誰可到
                                 $td.attr({
-                                    "style": "color:#3074B5;background-color:orange",
+                                    "style": "color:#3074B5;background-color:orange;height: 1px;",
                                 });//沒有人有課就會改澄色;
                                 break;
                                 case 2:$sp.attr({
                                     "data-toggle": "tooltip",
                                     "data-placement": "top",
                                     "title": "沒人可以到QQ",
+                                    "style": "height: 30%;width:100%",
                                 });//放上tooltip顯示有誰可到
                                 $td.attr({
-                                    "style": "color:#3074B5;background-color:red",
+                                    "style": "color:#3074B5;background-color:red;height: 1px;",
                                 });//沒有人有課就會改紅色;
                                 break;
                                 default:
