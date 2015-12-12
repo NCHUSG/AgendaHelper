@@ -38,8 +38,8 @@
         <style>
         body
         {
-            background-color:#3074B5;
-            background-repeat:no-repeat;
+            background-image: url("images/image2.JPG");
+            /*background-color:#3074B5;*/
             background-attachment: fixed;
             font-family: "Microsoft JhengHei";
         }
@@ -129,7 +129,9 @@
             background-color: transparent;
             color: #ADBDC5;
         }
-
+        #non-display{
+            visibility:hidden;
+        }
         </style>
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -156,28 +158,31 @@
             <div class="col-md-12">
                 <div class="row" id="curriculum-title">
                     <div class="col-xs-12" style="text-align:center;">
-                        <h3 id="span-color" style="color:#F9F4F4">Tiagenda</h3>
+                        <img src="images/title1.PNG" alt"Tiagenda title" >
                     </div>
                 </div>
             </div>
-            <div class="col-md-1" id="classification">
+            <div class="col-md-2" id="classification">
                 <br>
-                <div class="container-fluid">
+                <div class="container-fluid">   
                     <div class="col-xs-12" id="btn-tools">
                         <button type="button" class="btn btn-danger btn-block" data-toggle="modal" data-target="#focus">
                             <span class="fa fa-heart fa-1x fa-fw"></span>輸入
                         </button>
+                        <br><br>
                     </div>
                     <div class="col-xs-12" id="btn-tools">
                         <button input type="button" class="btn btn-success btn-block" id="demo">
                             <span class="fa fa-check-circle fa-1x fa-fw"></span>分析
                         </button>
+                        <br><br>
                     </div>
                     <br>
                     <div class="col-xs-12" id="btn-tools">
                         <button type="button" class="btn btn-warning btn-block" id="clear-button">
                             <span class="fa fa-trash fa-1x fa-fw"></span>清除
                         </button>
+                        <br><br>
                     </div>
                     <br>
                     <div class="col-xs-12" id="btn-tools">
@@ -202,7 +207,9 @@
                     </div>
                 </div>
             </div>
-            
+            <div id="non-display">
+                <row>5465465465465</row>
+            </div>
             <div class="col-md-10">
                 <div class="table-responsive" id="time-table">
                     <table class="table table-striped table-hover table-condensed table-bordered">
