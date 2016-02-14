@@ -11,7 +11,7 @@
                 window.teacher_course = {}; //這是以老師姓名為index的陣列
                 window.name_of_course = {}; //這是以課程名稱為index的陣列
                 window.name_of_optional_obligatory = [] //這是用來存系上的必修課，檢查有沒有課名是重複的，若有就讓使用者自行決定要上哪堂
-                window.json_resource=["json/user.json","json/user2.json"];//temp array,先暫時寫成本地端的陣列，未來會需要用ajax取得資料
+                window.json_resource=[];//temp array,先暫時寫成本地端的陣列，未來會需要用ajax取得資料
                 window.user=[];//this array will be filled with student's json.
                 window.agenda_count=[[0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0]];
                 window.agenda_name_count=[["","","","","","","","","","","","",""],["","","","","","","","","","","","",""],["","","","","","","","","","","","",""],["","","","","","","","","","","","",""],["","","","","","","","","","","","",""]]
@@ -258,101 +258,205 @@
                 })
             });
             
+            window.fileName="";
+            //顯示要上傳檔案的名稱
+            $('input[type="file"]').change(function(e){
+                fileName = e.target.files[0].name;
+                $('#file_name').attr("value",fileName);
+            });
+            // //將上傳的檔案路徑存入json_resource
+            // $('#submit').click(function(){
+            //     var json_number=json_resource.length;
+            //     json_resource[json_number]="file/"+fileName;
+            // });
+
+            function onChange(event) {
+                var reader = new FileReader();
+                reader.onload = onReaderLoad;
+                reader.readAsText(event.target.files[0]);
+            }
+            window.obj=[]
+            function onReaderLoad(event){
+                console.log(event.target.result);
+                obj[0]= JSON.parse(event.target.result);     
+            }
+            $('#submit').click(function(){
+                json_num+=1;
+                $.each(obj,function(uk,uv){
+                    has_class=[[0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0]];//是否有課的陣列
+                    $.each(uv.time_table,function(hk,hv){
+                        $.each(hv.time_parsed,function(ik, iv){
+                            $.each(iv.time,function(jk, jv){
+                                agenda_count[iv.day-1][jv-1]++;//那門課的重疊次數加一  
+                                has_class[iv.day-1][jv-1]=1;//判斷是否有課=1               
+                            });                    
+                        });
+                    });
+                    current_name=uv['user-name']    //存放目前json的name
+                    //將有課的時段的tooltip加上名子
+                    $.each(has_class,function(ik,iv){
+                        $.each(iv,function(jk,jv){
+                            if(jv==0&&agenda_name_count[ik][jk]=="")
+                            {
+                                //將有課的name存入目前時段
+                                agenda_name_count[ik][jk]+=current_name
+                            }
+                            else if(jv==0)
+                            {
+                                current_name=","+current_name
+                                agenda_name_count[ik][jk]+=current_name
+                                current_name=uv['user-name']
+                            }
+                        });
+                    });
+                });
+                obj=[];
+            });
+            document.getElementById('file').addEventListener('change', onChange);
+
             window.week = ["一", "二", "三", "四", "五"];
-            window.no_one="沒人可以到喔"
+            window.no_one="沒人可以到喔";
             window.once=1;//判斷是否是第一次按
             window.json_num=0;
             window.current_name="" //存放目前json的name 
             console.log(no_one)
-            $("#demo").click(function(){   
-                if(once==1)
-                {
-                    $.each(window.json_resource,function(kk,kv){
-                        $.getJSON(kv, function(json){  //getJSON會用function(X)傳回X的物件或陣列                    
-                            window.user.push(json);
-                            json_num+=1
-                        }).done(function(){     //done會讓程式等前面的getJSON跑完後再執行後方程式
-                            //用來計算user中,每個時段有幾個人有課的個數
-                            if(json_num==json_resource.length)//判斷json_sourse是否都push進入user
-                            {   
-                                $.each(user,function(uk,uv){
-                                    has_class=[[0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0]];//是否有課的陣列
-                                    $.each(uv.time_table,function(hk,hv){
-                                        $.each(hv.time_parsed,function(ik, iv){
-                                            $.each(iv.time,function(jk, jv){
-                                                agenda_count[iv.day-1][jv-1]++;//那門課的重疊次數加一  
-                                                has_class[iv.day-1][jv-1]=1;//判斷是否有課=1               
-                                            });                    
-                                        });
-                                    });
-                                    current_name=uv.name    //存放目前json的name
-                                    //將有課的時段的tooltip加上名子
-                                    $.each(has_class,function(ik,iv){
-                                        $.each(iv,function(jk,jv){
-                                            if(jv==0&&agenda_name_count[ik][jk]=="")
-                                            {
-                                                //將有課的name存入目前時段
-                                                agenda_name_count[ik][jk]+=current_name
-                                            }
-                                            else if(jv==0)
-                                            {
-                                                current_name=","+current_name
-                                                agenda_name_count[ik][jk]+=current_name
-                                                current_name=uv.name
-                                            }
-                                        });
-                                    });
-                                });
-                                //找尋每個時段有多少人有課的值
-                                $.each(agenda_count,function(ik,iv){
-                                    $.each(iv,function(jk,jv){
-                                        var $td = $("#time-table").find('tr[data-hour=' + (jk+1) + '] td[data-day=' + (ik+1) + ']');     //將目前所在的td位置指派給$td    
-                                        var $sp = $("#time-table").find('tr[data-hour=' + (jk+1) + '] td[data-day=' + (ik+1) + '] div');//將目前所在的span位置指派給$td
-                                        switch(jv)
-                                        {
-                                            case 0:$sp.attr({
-                                                "data-toggle": "tooltip",
-                                                "data-placement": "top",
-                                                "title": agenda_name_count[ik][jk],
-                                                "style": "height: 80%;width:100%",
-                                            });//放上tooltip顯示有誰可到
-                                            $td.attr({
-                                                "style": "color:#3074B5;background-color:green;",
-                                            });//沒有人有課就會改綠色;
-                                            break;
-                                            case 1:$sp.attr({
-                                                "data-toggle": "tooltip",
-                                                "data-placement": "top",
-                                                "title": agenda_name_count[ik][jk],
-                                                "style": "height: 80%;width:100%",
-                                            });//放上tooltip顯示有誰可到
-                                            $td.attr({
-                                                "style": "color:#3074B5;background-color:orange;",
-                                            });//沒有人有課就會改澄色;
-                                            break;
-                                            case 2:$sp.attr({
-                                                "data-toggle": "tooltip",
-                                                "data-placement": "top",
-                                                "title": no_one,
-                                                "style": "height: 80%;width:100%",
-                                            });//放上tooltip顯示有誰可到
-                                            $td.attr({
-                                                "style": "color:#3074B5;background-color:red;",
-                                            });//沒有人有課就會改紅色;
-                                            break;
-                                            default:
-                                            break;
-                                        }     
-                                        //把現在找到的這門選修課課程代碼儲存到這個option，並用value表示       
-                                        //var url=course.url;                
-                                        $('[data-toggle="tooltip"]').tooltip(); //讓tooltip功能綁上去            
-                                    });  
-                                }); 
-                                once=0;
-                            }
-                        });                                           
-                    }) 
-                }        
+            $("#demo").click(function(){     
+                //找尋每個時段有多少人有課的值
+                $.each(agenda_count,function(ik,iv){
+                    $.each(iv,function(jk,jv){
+                        var $td = $("#time-table").find('tr[data-hour=' + (jk+1) + '] td[data-day=' + (ik+1) + ']');     //將目前所在的td位置指派給$td    
+                        var $div = $("#time-table").find('tr[data-hour=' + (jk+1) + '] td[data-day=' + (ik+1) + '] div');//將目前所在的div位置指派給$div
+                        var $sp = $("#time-table").find('tr[data-hour=' + (jk+1) + '] td[data-day=' + (ik+1) + '] span');//將目前所在的span位置指派給$sp
+                        if(agenda_name_count[ik][jk]=="")
+                        {
+                            agenda_name_count[ik][jk]="沒人可到喔QQ";
+                        }
+
+                        if(jv>=0&&jv<=5)
+                        {
+                            $div.attr({
+                                "data-toggle": "tooltip",
+                                "data-placement": "top",
+                                "title": agenda_name_count[ik][jk],
+                                "style": "height: 80%;width:100%",
+                            });//放上tooltip顯示有誰可到
+                            $td.attr({
+                                "style": "color:#3074B5;background-color:#D0F5A9;",
+                            });//0~5個人有課就會改綠色;
+                            $sp.attr({
+                                "class":"",
+                                "style":"color:black;font-weight:bold"
+                            });
+                            $sp.append("<h1>"+(json_num-jv)+"</h1>");
+                        }
+                        else if(jv>=6&&jv<=10)
+                        {
+                            $div.attr({
+                                "data-toggle": "tooltip",
+                                "data-placement": "top",
+                                "title": agenda_name_count[ik][jk],
+                                "style": "height: 80%;width:100%",
+                            });//放上tooltip顯示有誰可到
+                            $td.attr({
+                                "style": "color:#3074B5;background-color:#81F7F3;;",
+                            });//6~10個人有課就會改澄色;
+                            $sp.attr({
+                                "class":"",
+                                "style":"color:black;font-weight:bold"
+                            });
+                            $sp.append("<h1>"+(json_num-jv)+"</h1>");
+                        }
+                        else if(jv>=11&&jv<=15)
+                        {
+                            $div.attr({
+                                "data-toggle": "tooltip",
+                                "data-placement": "top",
+                                "title": agenda_name_count[ik][jk],
+                                "style": "height: 80%;width:100%",
+                            });//放上tooltip顯示有誰可到
+                            $td.attr({
+                                "style": "color:#3074B5;background-color:#F7D358",
+                            });//11~15人;
+                            $sp.attr({
+                                "class":"",
+                                "style":"color:black;font-weight:bold"
+                            });
+                            $sp.append("<h1>"+(json_num-jv)+"</h1>");
+                        }
+                        else if(jv>=16&&jv<=20)
+                        {
+                            $div.attr({
+                                "data-toggle": "tooltip",
+                                "data-placement": "top",
+                                "title": agenda_name_count[ik][jk],
+                                "style": "height: 80%;width:100%",
+                            });//放上tooltip顯示有誰可到
+                            $td.attr({
+                                "style": "color:#3074B5;background-color:#F3F781;",
+                            });//16~20人;
+                            $sp.attr({
+                                "class":"",
+                                "style":"color:black;font-weight:bold"
+                            });
+                            $sp.append("<h1>"+(json_num-jv)+"</h1>");
+                        }
+                        else
+                        {
+                            $div.attr({
+                                "data-toggle": "tooltip",
+                                "data-placement": "top",
+                                "title": agenda_name_count[ik][jk],
+                                "style": "height: 80%;width:100%",
+                            });//放上tooltip顯示有誰可到
+                            $td.attr({
+                                "style": "color:#3074B5;background-color:#FA5858;",
+                            });//20個以上有課就會改紅色;
+                            $sp.attr({
+                                "class":"",
+                                "style":"color:black;font-weight:bold"
+                            });
+                            $sp.append("<h1>"+(json_num-jv)+"</h1>");
+                        }
+                        // switch(jv)
+                        // {
+                        //     case 0:$div.attr({
+                        //         "data-toggle": "tooltip",
+                        //         "data-placement": "top",
+                        //         "title": agenda_name_count[ik][jk],
+                        //         "style": "height: 80%;width:100%",
+                        //     });//放上tooltip顯示有誰可到
+                        //     $td.attr({
+                        //         "style": "color:#3074B5;background-color:green;",
+                        //     });//沒有人有課就會改綠色;
+                        //     break;
+                        //     case 1:$div.attr({
+                        //         "data-toggle": "tooltip",
+                        //         "data-placement": "top",
+                        //         "title": agenda_name_count[ik][jk],
+                        //         "style": "height: 80%;width:100%",
+                        //     });//放上tooltip顯示有誰可到
+                        //     $td.attr({
+                        //         "style": "color:#3074B5;background-color:orange;",
+                        //     });//1個人有課就會改澄色;
+                        //     break;
+                        //     case 2:$div.attr({
+                        //         "data-toggle": "tooltip",
+                        //         "data-placement": "top",
+                        //         "title": no_one,
+                        //         "style": "height: 80%;width:100%",
+                        //     });//放上tooltip顯示有誰可到
+                        //     $td.attr({
+                        //         "style": "color:#3074B5;background-color:red;",
+                        //     });//2個人有課就會改紅色;
+                        //     break;
+                        //     default:
+                        //     break;
+                        // }     
+                        //把現在找到的這門選修課課程代碼儲存到這個option，並用value表示       
+                        //var url=course.url;                
+                        $('[data-toggle="tooltip"]').tooltip(); //讓tooltip功能綁上去            
+                    });  
+                }); 
             });
             window.add_course = function($target, course, language){      //假設target為time-table的參數，course為courses的某一個課程
                 if( !$.isArray(course.time_parsed) )

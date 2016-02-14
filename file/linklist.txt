@@ -1,0 +1,31 @@
+Module Module1
+    Class PListNode       
+        Public coef As Double '«Y¼Æ
+        Public expo As Integer '¾­¦¸
+        Public nextNode As PListNode
+    End Class
+    Sub Main()
+        Dim a, b As PListNode
+        Dim i As Integer
+        a = New PListNode
+        b = a
+        a.coef = 10 : a.expo = 9
+        a.nextNode = New PListNode
+        a = a.nextNode
+        a.coef = 1 : a.expo = 3
+        a.nextNode = New PListNode
+        a = a.nextNode
+        a.coef = 10 : a.expo = 2
+        a.nextNode = New PListNode
+        a = a.nextNode
+        a.coef = 10 : a.expo = 1
+        a.nextNode = New PListNode
+        a = a.nextNode
+        a = b
+        For i = 0 To 3
+            Console.Write("{0}x^{1} ", a.coef, a.expo)
+            a = a.nextNode
+        Next
+        Console.ReadKey()
+    End Sub
+End Module
