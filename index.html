@@ -204,7 +204,7 @@
                     </div>
                     <br>
                     <div class="col-xs-12" id="btn-tools">
-                        <button type="button" class="btn btn-warning btn-block" id="clear-button">
+                        <button type="button" class="btn btn-warning btn-block clear-button">
                             <span class="fa fa-trash fa-1x fa-fw"></span>清除
                         </button>
                         <br><br>
@@ -226,14 +226,17 @@
                                 <!-- iframe是用來運作upload.php的隱藏頁面 -->
                                 <iframe name="hiddenFrame" class="hide"></iframe>
                                 <!-- 上傳檔案的form,target="hiddenFrame"是為了讓upload.php運作在iframe中,否則會載入upload.php來取代目前的html頁面 -->
-                                <form action="upload.php" enctype="multipart/form-data" method="post" target="hiddenFrame">
-                                <div class="fileUpload btn btn-primary">
-                                    <span>選擇檔案</span>
-                                    <input id="file" name="file" type="file" class="upload" multiple="multiple" />
-                                </div>
-                                <input id="file_name" value="尚未選擇檔案" disabled="disabled" />
-                                <button id="submit" name="submit" type="submit" class="btn btn-default">開始上傳</button>
+                                <form >
+                                    <div class="fileUpload btn btn-primary">
+                                        <span>選擇檔案</span>
+                                        <input id="file" name="file" type="file" accept=".json" class="upload" multiple="multiple" />
+                                    </div>
+                                    <input id="file_name" value="尚未選擇檔案" disabled="disabled" />
+                                    <button id="submit" type="reset" class="btn btn-default">開始上傳</button>
+                                    <button type="button" class="btn btn-warning clear-button">清除</button>
                                 </form>
+                                <div id="not_upload_file_name"></div>
+                                <div id="upload_file_name"></div>
                             </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
