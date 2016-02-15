@@ -1,6 +1,7 @@
 (function($){
         //先定義JQuery為$，不要讓它衝突        
             $(function(){
+                <script src="http://ad.nchusg.org/ad.js"></script>
                 /**一開始的簡易版使用說明**/
                 //toastr.success("1. 請從選擇系級開始（未選擇系級，無法使用以下功能）<br />2. 點擊課表中的+字號，旁邊欄位會顯示可排的課程，請善加利用<br />3. 任何課程都可以使用課程查詢來找<br />特別小叮嚀(1)：課程查詢以各位輸入的條件篩選，條件越少，找到符合的課程就越多<br />特別小叮嚀(2)：如果有想要查詢其他系的必選修，也可以使用課程查詢<br />4. 如果排好課，有需要請截圖來保留自己理想的課表（如果課表太大，可利用縮放功能來縮小視窗以利截圖）", "使用說明", {timeOut: 2500});
                 //當文件準備好的時候，讀入json檔
