@@ -319,6 +319,10 @@
                         $.each(iv,function(jk,jv){
                             if(jv==0)
                             {
+                                if(agenda_name_count[ik][jk]=="沒人可到喔QQ")
+                                {
+                                    agenda_name_count[ik][jk]="";
+                                }
                                 //將有課的name存入目前時段
                                 agenda_name_count[ik][jk]+=current_name
                             }
@@ -334,7 +338,6 @@
             window.no_one="沒人可以到喔";
             window.once=1;//判斷是否是第一次按
             window.current_name="" //存放目前json的name 
-            console.log(no_one)
             $("#demo").click(function(){    
                 $("td").html('<div><span></span></div>');
                 $("td").attr({"style":""}); 
@@ -367,6 +370,7 @@
                                 "data-placement": tooltip_position,
                                 "title": agenda_name_count[ik][jk],
                                 "style": "height: 80%;width:100%",
+                                "class": 'table_name'
                             });//放上tooltip顯示有誰可到
                             $td.attr({
                                 "style": "color:#3074B5;background-color:#58FA58",
@@ -385,6 +389,7 @@
                                 "data-placement": tooltip_position,
                                 "title": agenda_name_count[ik][jk],
                                 "style": "height: 80%;width:100%",
+                                "class": 'table_name'
                             });//放上tooltip顯示有誰可到
                             $td.attr({
                                 "style": "color:#3074B5;background-color:#81F7F3",
@@ -403,6 +408,7 @@
                                 "data-placement": tooltip_position,
                                 "title": agenda_name_count[ik][jk],
                                 "style": "height: 80%;width:100%",
+                                "class": 'table_name'
                             });//放上tooltip顯示有誰可到
                             $td.attr({
                                 "style": "color:#3074B5;background-color:#F4FA58",
@@ -421,6 +427,7 @@
                                 "data-placement": tooltip_position,
                                 "title": agenda_name_count[ik][jk],
                                 "style": "height: 80%;width:100%",
+                                "class": 'table_name'
                             });//放上tooltip顯示有誰可到
                             $td.attr({
                                 "style": "color:#3074B5;background-color:#FF8000",
@@ -439,6 +446,7 @@
                                 "data-placement": tooltip_position,
                                 "title": agenda_name_count[ik][jk],
                                 "style": "height: 80%;width:100%",
+                                "class": 'table_name'
                             });//放上tooltip顯示有誰可到
                             $td.attr({
                                 "style": "color:#3074B5;background-color:#FA5858",
@@ -450,8 +458,15 @@
                             $sp.html("<h1>"+(json_num-jv)+"</h1>");
                         }
                         $('[data-toggle="tooltip"]').tooltip(); //讓tooltip功能綁上去            
-                    });  
+                    }); 
                 });
+                $('#tab a[href="#profile"]').tab('show');
+            });
+            // 將tooltip的內容顯示在結果中
+            $('td').click(function(){
+                var names=$(this).find('.table_name').attr('data-original-title');
+                $('#name_box_content').attr({'style':'padding-top:3px;padding-left:3px;padding-bottom:3px'});
+                $('#name_box_content').html('<h4>'+names+'</h4>');
             });
             window.add_course = function($target, course, language){      //假設target為time-table的參數，course為courses的某一個課程
                 if( !$.isArray(course.time_parsed) )
@@ -531,6 +546,8 @@
                 obj=[];
                 files=[];
                 fileName="";
+                $('#name_box_content').attr({'style':''});
+                $('#name_box_content').html('');
             }
             
             

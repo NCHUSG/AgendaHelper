@@ -157,6 +157,35 @@
             opacity: 0;
             filter: alpha(opacity=0);
         }
+        #tab
+        {
+            background-color: white;
+        }
+        #tab ul
+        {
+            padding-left:0;
+        }
+        .tab-content{
+            padding-top: 1px
+        }
+        #name_box
+        {
+            padding: 0;
+        }
+        #name_box_header
+        {
+            text-align: center;
+            padding-top: 5px;
+            padding-bottom: 5px;
+            background-color:#CCE2FF;
+        }
+        #name_box_content
+        {
+            background-color: white;
+        }
+        td{
+            cursor: pointer;
+        }
         </style>
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -176,17 +205,14 @@
 
     </script>
     <body>
-
-        <!--選取系級的表單結束-->
-        <div class="container-fluid">
-            <!--會出現系選修和體育、通識-->
-            <div class="col-md-12">
-                <div class="row" id="curriculum-title">
-                    <div class="col-xs-12" style="text-align:center;">
-                        <img src="images/title1.png" alt"Tiagenda title" >
-                    </div>
+        <div class="col-md-16">
+            <div class="row" id="curriculum-title">
+                <div class="col-xs-12" style="text-align:center;">
+                    <img src="images/title1.png" alt"Tiagenda title" >
                 </div>
             </div>
+        </div>
+        <div class="container-fluid">
             <div class="col-md-2" id="classification">
                 <br>
                 <div class="container-fluid">   
@@ -198,7 +224,7 @@
                     </div>
                     <div class="col-xs-12" id="btn-tools">
                         <button input type="button" class="btn btn-success btn-block" id="demo">
-                            <span class="fa fa-check-circle fa-1x fa-fw"></span>分析
+                            <span class="fa fa-check-circle fa-1x fa-fw "></span>分析
                         </button>
                         <br><br>
                     </div>
@@ -215,6 +241,13 @@
                             <span class="fa fa-floppy-o fa-1x fa-fw"></span>儲存
                         </button>
                     </div> -->
+                    
+                    <!-- 顯示目前時段可到的姓名 -->
+                    <div id="name_box" class="col-xs-12">
+                        <div id="name_box_header" class="panel-heading">結果</div>
+                        <div id="name_box_content"></div>
+                    </div>
+                    
                 </div>
                 <br>
                 <div class="modal fade modal fade bs-example-modal-lg" id="focus" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -248,123 +281,137 @@
                 <row>5465465465465</row>
             </div>
             <div class="col-md-10">
-                <div class="table-responsive" id="time-table">
-                    <table class="table table-striped table-hover table-condensed">
-                        <thead>
-                            <tr class="info">
-                                <th style="width: 10%">時間</th>
-                                <th style="width: 18%">一</th>
-                                <th style="width: 18%">二</th>
-                                <th style="width: 18%">三</th>
-                                <th style="width: 18%">四</th>
-                                <th style="width: 18%">五</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr data-hour="1" class="active">
-                                <th>
-                                    <h3>1</h3>
-                                </th>
-                                <td data-day="1"><div><span></span></div></td>
-                                <td data-day="2"><div><span></span></div></td>
-                                <td data-day="3"><div><span></span></div></td>
-                                <td data-day="4"><div><span></span></div></td>
-                                <td data-day="5"><div><span></span></div></td>
-                            </tr>
-                            <tr data-hour="2" class="active">
-                                <th>
-                                    <h3>2</h3>
-                                </th>
-                                <td data-day="1"><div><span></span></div></td>
-                                <td data-day="2"><div><span></span></div></td>
-                                <td data-day="3"><div><span></span></div></td>
-                                <td data-day="4"><div><span></span></div></td>
-                                <td data-day="5"><div><span></span></div></td>
-                            </tr>
-                            <tr data-hour="3" class="active">
-                                <th>
-                                    <h3>3</h3>
+                <div id="tab">
+                  <!-- Nav tabs -->
+                  <ul class="nav nav-tabs" role="tablist">
+                    <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">使用方法</a></li>
+                    <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">分析結果</a></li>
+                  </ul>
+                  <!-- Tab panes -->
+                  <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane fade in active" id="home">...</div>
+                    <div role="tabpanel" class="tab-pane fade" id="profile">
+                        <div id="time-table">
+                            <table class="table table-striped table-hover table-condensed">
+                                <thead>
+                                    <tr class="info">
+                                        <th style="width: 10%">時間</th>
+                                        <th style="width: 18%">一</th>
+                                        <th style="width: 18%">二</th>
+                                        <th style="width: 18%">三</th>
+                                        <th style="width: 18%">四</th>
+                                        <th style="width: 18%">五</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr data-hour="1" class="active">
+                                        <th>
+                                            <h3>1</h3>
+                                        </th>
+                                        <td data-day="1"><div><span></span></div></td>
+                                        <td data-day="2"><div><span></span></div></td>
+                                        <td data-day="3"><div><span></span></div></td>
+                                        <td data-day="4"><div><span></span></div></td>
+                                        <td data-day="5"><div><span></span></div></td>
+                                    </tr>
+                                    <tr data-hour="2" class="active">
+                                        <th>
+                                            <h3>2</h3>
+                                        </th>
+                                        <td data-day="1"><div><span></span></div></td>
+                                        <td data-day="2"><div><span></span></div></td>
+                                        <td data-day="3"><div><span></span></div></td>
+                                        <td data-day="4"><div><span></span></div></td>
+                                        <td data-day="5"><div><span></span></div></td>
+                                    </tr>
+                                    <tr data-hour="3" class="active">
+                                        <th>
+                                            <h3>3</h3>
 
-                                </th>
-                                <td data-day="1"><div><span></span></div></td>
-                                <td data-day="2"><div><span></span></div></td>
-                                <td data-day="3"><div><span></span></div></td>
-                                <td data-day="4"><div><span></span></div></td>
-                                <td data-day="5"><div><span></span></div></td>
+                                        </th>
+                                        <td data-day="1"><div><span></span></div></td>
+                                        <td data-day="2"><div><span></span></div></td>
+                                        <td data-day="3"><div><span></span></div></td>
+                                        <td data-day="4"><div><span></span></div></td>
+                                        <td data-day="5"><div><span></span></div></td>
 
-                            </tr>
-                            <tr data-hour="4" class="active">
-                                <th>
-                                    <h3>4</h3>
+                                    </tr>
+                                    <tr data-hour="4" class="active">
+                                        <th>
+                                            <h3>4</h3>
 
-                                </th>
-                                <td data-day="1"><div><span></span></div></td>
-                                <td data-day="2"><div><span></span></div></td>
-                                <td data-day="3"><div><span></span></div></td>
-                                <td data-day="4"><div><span></span></div></td>
-                                <td data-day="5"><div><span></span></div></td>
+                                        </th>
+                                        <td data-day="1"><div><span></span></div></td>
+                                        <td data-day="2"><div><span></span></div></td>
+                                        <td data-day="3"><div><span></span></div></td>
+                                        <td data-day="4"><div><span></span></div></td>
+                                        <td data-day="5"><div><span></span></div></td>
 
-                            </tr>
-                            <tr data-hour="5" class="active">
-                                <th>
-                                    <h3>5</h3>
+                                    </tr>
+                                    <tr data-hour="5" class="active">
+                                        <th>
+                                            <h3>5</h3>
 
-                                </th>
-                                <td data-day="1"><div><span></span></div></td>
-                                <td data-day="2"><div><span></span></div></td>
-                                <td data-day="3"><div><span></span></div></td>
-                                <td data-day="4"><div><span></span></div></td>
-                                <td data-day="5"><div><span></span></div></td>
+                                        </th>
+                                        <td data-day="1"><div><span></span></div></td>
+                                        <td data-day="2"><div><span></span></div></td>
+                                        <td data-day="3"><div><span></span></div></td>
+                                        <td data-day="4"><div><span></span></div></td>
+                                        <td data-day="5"><div><span></span></div></td>
 
-                            </tr>
-                            <tr data-hour="6" class="active">
-                                <th>
-                                    <h3>6</h3>
+                                    </tr>
+                                    <tr data-hour="6" class="active">
+                                        <th>
+                                            <h3>6</h3>
 
-                                </th>
-                                <td data-day="1"><div><span></span></div></td>
-                                <td data-day="2"><div><span></span></div></td>
-                                <td data-day="3"><div><span></span></div></td>
-                                <td data-day="4"><div><span></span></div></td>
-                                <td data-day="5"><div><span></span></div></td>
+                                        </th>
+                                        <td data-day="1"><div><span></span></div></td>
+                                        <td data-day="2"><div><span></span></div></td>
+                                        <td data-day="3"><div><span></span></div></td>
+                                        <td data-day="4"><div><span></span></div></td>
+                                        <td data-day="5"><div><span></span></div></td>
 
-                            </tr>
-                            <tr data-hour="7" class="active">
-                                <th>
-                                    <h3>7</h3>
+                                    </tr>
+                                    <tr data-hour="7" class="active">
+                                        <th>
+                                            <h3>7</h3>
 
-                                </th>
-                                <td data-day="1"><div><span></span></div></td>
-                                <td data-day="2"><div><span></span></div></td>
-                                <td data-day="3"><div><span></span></div></td>
-                                <td data-day="4"><div><span></span></div></td>
-                                <td data-day="5"><div><span></span></div></td>
-                            <tr data-hour="8" class="active">
-                                <th>
-                                    <h3>8</h3>
-                                </th>
-                                <td data-day="1"><div><span></span></div></td>
-                                <td data-day="2"><div><span></span></div></td>
-                                <td data-day="3"><div><span></span></div></td>
-                                <td data-day="4"><div><span></span></div></td>
-                                <td data-day="5"><div><span></span></div></td>
+                                        </th>
+                                        <td data-day="1"><div><span></span></div></td>
+                                        <td data-day="2"><div><span></span></div></td>
+                                        <td data-day="3"><div><span></span></div></td>
+                                        <td data-day="4"><div><span></span></div></td>
+                                        <td data-day="5"><div><span></span></div></td>
+                                    <tr data-hour="8" class="active">
+                                        <th>
+                                            <h3>8</h3>
+                                        </th>
+                                        <td data-day="1"><div><span></span></div></td>
+                                        <td data-day="2"><div><span></span></div></td>
+                                        <td data-day="3"><div><span></span></div></td>
+                                        <td data-day="4"><div><span></span></div></td>
+                                        <td data-day="5"><div><span></span></div></td>
 
-                            </tr>
-                            <tr data-hour="9" class="active">
-                                <th>
-                                    <h3>9</h3>
-                                </th>
-                                <td data-day="1"><div><span></span></div></td>
-                                <td data-day="2"><div><span></span></div></td>
-                                <td data-day="3"><div><span></span></div></td>
-                                <td data-day="4"><div><span></span></div></td>
-                                <td data-day="5"><div><span></span></div></td>
+                                    </tr>
+                                    <tr data-hour="9" class="active">
+                                        <th>
+                                            <h3>9</h3>
+                                        </th>
+                                        <td data-day="1"><div><span></span></div></td>
+                                        <td data-day="2"><div><span></span></div></td>
+                                        <td data-day="3"><div><span></span></div></td>
+                                        <td data-day="4"><div><span></span></div></td>
+                                        <td data-day="5"><div><span></span></div></td>
 
-                            </tr>
-                            
-                        </tbody>
-                    </table>
+                                    </tr>
+                                    
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                  </div>
                 </div>
+                
             </div>
             <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
             <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
