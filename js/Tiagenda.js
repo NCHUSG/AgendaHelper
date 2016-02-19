@@ -202,12 +202,16 @@
                                 //且將相同部門的放在一起
                                 var has_key=0;
                                 //判斷是否為空字典
+                                console.log("1");
                                 if(!jQuery.isEmptyObject(agenda_name_count[ik][jk]))
                                 {
+                                    console.log("2");
                                     var agenda_name_count_obj=agenda_name_count[ik][jk];
                                     $.each(agenda_name_count_obj,function(key,value){
+                                        console.log("3");
                                         if(key==uv['user-dept'])
                                         {
+                                            console.log("4");
                                             value+=current_name;
                                             has_key=1;
                                             agenda_name_count[ik][jk][uv['user-dept']]=value;
