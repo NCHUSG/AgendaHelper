@@ -203,12 +203,10 @@
                                 //且將相同部門的放在一起
                                 var has_key=0;
                                 //判斷是否為空字典
+                                console.log(typeof(agenda_name_count[ik][jk]));
                                 if(!jQuery.isEmptyObject(agenda_name_count[ik][jk]))
                                 {
-                                    var str=JSON.stringify(agenda_name_count[ik][jk]);
-                                    console.log(typeof(str));
-                                    console.log(str);
-                                    var agenda_name_count_obj=$.parseJSON(str);
+                                    var agenda_name_count_obj=$.parseJSON(agenda_name_count[ik][jk]);
                                     console.log(typeof(agenda_name_count_obj));
                                     $.each(agenda_name_count_obj,function(key,value){
                                         console.log("3");
