@@ -66,8 +66,8 @@
                     });
                     if(localStorage['agenda_count']!="")
                     {
-                        agenda_count=JSON.parse(localStorage['agenda_count']);
-                        agenda_name_count=JSON.parse(localStorage['agenda_name_count']);
+                        agenda_count=$.parseJSON(localStorage['agenda_count']);
+                        agenda_name_count=$.parseJSON(localStorage['agenda_name_count']);
                         json_num=parseInt(localStorage['json_num']);
                         demo_click();
                         fileName=localStorage['fileName'];
@@ -168,7 +168,7 @@
                         r.onload = (function(f) {
                             return function(e) {
                                 var contents = e.target.result;
-                                obj[json_current_num] = JSON.parse(contents);
+                                obj[json_current_num] = $.parseJSON(contents);
                                 json_current_num+=1;
                             };
                         })(f);
