@@ -17,7 +17,7 @@
                     window.json_resource=[];//temp array,先暫時寫成本地端的陣列，未來會需要用ajax取得資料
                     window.user=[];//this array will be filled with student's json.
                     window.agenda_count=[[0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0]];
-                    window.agenda_name_count=[[{},{},{},{},{},{},{},{},{},{},{},{},{}],[{},{},{},{},{},{},{},{},{},{},{},{},{}],[{},{},{},{},{},{},{},{},{},{},{},{},{}],[{},{},{},{},{},{},{},{},{},{},{},{},{}],[{},{},{},{},{},{},{},{},{},{},{},{},{}]]
+                    window.agenda_name_count=[[{},{},{},{},{},{},{},{},{},{},{},{},{}],[{},{},{},{},{},{},{},{},{},{},{},{},{}],[{},{},{},{},{},{},{},{},{},{},{},{},{}],[{},{},{},{},{},{},{},{},{},{},{},{},{}],[{},{},{},{},{},{},{},{},{},{},{},{},{}]];
                     window.fileName="";
                     window.json_num=0;
                     window.obj=[];
@@ -85,11 +85,12 @@
                     window.json_resource=[];//temp array,先暫時寫成本地端的陣列，未來會需要用ajax取得資料
                     window.user=[];//this array will be filled with student's json.
                     window.agenda_count=[[0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0]];
-                    window.agenda_name_count=[[{},{},{},{},{},{},{},{},{},{},{},{},{}],[{},{},{},{},{},{},{},{},{},{},{},{},{}],[{},{},{},{},{},{},{},{},{},{},{},{},{}],[{},{},{},{},{},{},{},{},{},{},{},{},{}],[{},{},{},{},{},{},{},{},{},{},{},{},{}]]
+                    window.agenda_name_count=[[{},{},{},{},{},{},{},{},{},{},{},{},{}],[{},{},{},{},{},{},{},{},{},{},{},{},{}],[{},{},{},{},{},{},{},{},{},{},{},{},{}],[{},{},{},{},{},{},{},{},{},{},{},{},{}],[{},{},{},{},{},{},{},{},{},{},{},{},{}]];
                     window.fileName="";
                     window.json_num=0;
                     window.obj=[];
                     window.files=[];
+                    console.log("up");
                     //Tiagenda的初始值就是每一段時間都沒有被重疊到
                     $.each(window.json_resource,function(kk,kv){
                         $.getJSON(kv, function(json){  //getJSON會用function(X)傳回X的物件或陣列                    
@@ -202,11 +203,10 @@
                                 //且將相同部門的放在一起
                                 var has_key=0;
                                 //判斷是否為空字典
-                                console.log("1");
                                 if(!jQuery.isEmptyObject(agenda_name_count[ik][jk]))
                                 {
-                                    console.log("2");
                                     var agenda_name_count_obj=agenda_name_count[ik][jk];
+                                    console.log(agenda_name_count_obj);
                                     $.each(agenda_name_count_obj,function(key,value){
                                         console.log("3");
                                         if(key==uv['user-dept'])
