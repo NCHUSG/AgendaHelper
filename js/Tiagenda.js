@@ -204,7 +204,8 @@
                                 //判斷是否為空字典
                                 if(!jQuery.isEmptyObject(agenda_name_count[ik][jk]))
                                 {
-                                    $.each(agenda_name_count[ik][jk],function(key,value){
+                                    var agenda_name_count_obj=agenda_name_count[ik][jk];
+                                    $.each(agenda_name_count_obj,function(key,value){
                                         if(key==uv['user-dept'])
                                         {
                                             value+=current_name;
@@ -252,7 +253,8 @@
                         //判斷是否為空字典
                         if(!jQuery.isEmptyObject(agenda_name_count[ik][jk]))
                         {
-                            $.each(agenda_name_count[ik][jk],function(key,value){
+                            var agenda_name_count_obj=agenda_name_count[ik][jk];
+                            $.each(agenda_name_count_obj,function(key,value){
                                 all_name+=value;
                             });
                         }
