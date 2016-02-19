@@ -64,7 +64,7 @@
                             });
                         });                                         
                     });
-                    if(localStorage['agenda_count']!=""&&localStorage['agenda_name_count']!="")
+                    if(!jQuery.isEmptyObject(localStorage))
                     {
                         agenda_count=$.parseJSON(localStorage['agenda_count']);
                         agenda_name_count=$.parseJSON(localStorage['agenda_name_count']);
@@ -402,9 +402,6 @@
                 fileName="";
                 $('#name_box_content').attr({'style':''});
                 $('#name_box_content').html('');
-                localStorage['agenda_count']="";
-                localStorage['agenda_name_count']="";
-                localStorage['json_num']="";
-                localStorage['fileName']="";
+                localStorage.clear(); 
             } 
         })(jQuery);
