@@ -64,8 +64,9 @@
                             });
                         });                                         
                     });
-                    if(localStorage['agenda_count']!="")
+                    if(localStorage['agenda_count']!=""&&localStorage['agenda_name_count']!="")
                     {
+                        console.log(localStorage['agenda_name_count']);
                         agenda_count=$.parseJSON(localStorage['agenda_count']);
                         agenda_name_count=$.parseJSON(localStorage['agenda_name_count']);
                         json_num=parseInt(localStorage['json_num']);
@@ -74,14 +75,15 @@
                         $('#upload_file_name').text("已上傳:"+fileName);
                     }
                 } 
-                else {
-                    window.credits=0//一開始的學分數是0
+                else 
+                {
+                    window.credits=0;//一開始的學分數是0
                     window.courses = {};//宣告一個空的物件
                     window.course_of_majors = {};//宣告一個空的物件
                     window.course_of_day = {};  //這是宣告日期的陣列
                     window.teacher_course = {}; //這是以老師姓名為index的陣列
                     window.name_of_course = {}; //這是以課程名稱為index的陣列
-                    window.name_of_optional_obligatory = [] //這是用來存系上的必修課，檢查有沒有課名是重複的，若有就讓使用者自行決定要上哪堂
+                    window.name_of_optional_obligatory = []; //這是用來存系上的必修課，檢查有沒有課名是重複的，若有就讓使用者自行決定要上哪堂
                     window.json_resource=[];//temp array,先暫時寫成本地端的陣列，未來會需要用ajax取得資料
                     window.user=[];//this array will be filled with student's json.
                     window.agenda_count=[[0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0]];
@@ -206,7 +208,7 @@
                                 console.log(typeof(agenda_name_count[ik][jk]));
                                 if(!jQuery.isEmptyObject(agenda_name_count[ik][jk]))
                                 {
-                                    var agenda_name_count_obj=$.parseJSON(agenda_name_count[ik][jk]);
+                                    var agenda_name_count_obj=agenda_name_count[ik][jk];
                                     console.log(typeof(agenda_name_count_obj));
                                     $.each(agenda_name_count_obj,function(key,value){
                                         console.log("3");
