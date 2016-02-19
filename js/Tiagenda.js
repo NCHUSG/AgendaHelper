@@ -64,8 +64,10 @@
                             });
                         });                                         
                     });
-                    if(!jQuery.isEmptyObject(localStorage))
+                    
+                    if(localStorage.length!=0)
                     {
+                        console.log(jQuery.isEmptyObject(localStorage));
                         agenda_count=$.parseJSON(localStorage['agenda_count']);
                         agenda_name_count=$.parseJSON(localStorage['agenda_name_count']);
                         json_num=parseInt(localStorage['json_num']);
