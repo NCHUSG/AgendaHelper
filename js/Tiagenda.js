@@ -205,7 +205,9 @@
                                 //判斷是否為空字典
                                 if(!jQuery.isEmptyObject(agenda_name_count[ik][jk]))
                                 {
-                                    var agenda_name_count_obj=agenda_name_count[ik][jk];
+                                    var str=JSON.stringify(agenda_name_count[ik][jk]);
+                                    console.log(typeof(str));
+                                    var agenda_name_count_obj=$.parseJSON(str);
                                     console.log(typeof(agenda_name_count_obj));
                                     $.each(agenda_name_count_obj,function(key,value){
                                         console.log("3");
