@@ -201,15 +201,20 @@
                                 //將有課的name存入目前時段
                                 //且將相同部門的放在一起
                                 var has_key=0;
-                                $.each(agenda_name_count[ik][jk],function(key,value){
-                                    if(key==uv['user-dept'])
-                                    {
-                                        value+=current_name;
-                                        has_key=1;
-                                        agenda_name_count[ik][jk][uv['user-dept']]=value;
-                                        return false;
-                                    }
-                                });
+                                //判斷是否為空字典
+                                if(!jQuery.isEmptyObject(agenda_name_count[ik][jk]))
+                                {
+                                    $.each(agenda_name_count[ik][jk],function(key,value){
+                                        if(key==uv['user-dept'])
+                                        {
+                                            value+=current_name;
+                                            has_key=1;
+                                            agenda_name_count[ik][jk][uv['user-dept']]=value;
+                                            return false;
+                                        }
+                                    });
+                                }
+                                
                                 if(has_key==0)
                                 {
                                     agenda_name_count[ik][jk][uv['user-dept']]=current_name;
@@ -244,8 +249,10 @@
 
                         //將目前課堂時段的名字取出
                         var all_name="";
-                        if(agenda_name_count[ik][jk])
+                        //判斷是否為空字典
+                        if(!jQuery.isEmptyObject(agenda_name_count[ik][jk]))
                         {
+                            console.log(agenda_name_count[ik][jk]);
                             $.each(agenda_name_count[ik][jk],function(key,value){
                                 all_name+=value;
                             });
