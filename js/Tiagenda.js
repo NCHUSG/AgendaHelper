@@ -206,7 +206,7 @@
                                 if(!jQuery.isEmptyObject(agenda_name_count[ik][jk]))
                                 {
                                     var agenda_name_count_obj=agenda_name_count[ik][jk];
-                                    console.log(jQuery.type(agenda_name_count_obj));
+                                    console.log(typeof(agenda_name_count_obj));
                                     $.each(agenda_name_count_obj,function(key,value){
                                         console.log("3");
                                         if(key==uv['user-dept'])
