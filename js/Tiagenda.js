@@ -207,6 +207,7 @@
                                 {
                                     var str=JSON.stringify(agenda_name_count[ik][jk]);
                                     console.log(typeof(str));
+                                    console.log(str);
                                     var agenda_name_count_obj=$.parseJSON(str);
                                     console.log(typeof(agenda_name_count_obj));
                                     $.each(agenda_name_count_obj,function(key,value){
