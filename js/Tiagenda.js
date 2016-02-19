@@ -17,7 +17,7 @@
                     window.json_resource=[];//temp array,先暫時寫成本地端的陣列，未來會需要用ajax取得資料
                     window.user=[];//this array will be filled with student's json.
                     window.agenda_count=[[0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0]];
-                    window.agenda_name_count=[["","","","","","","","","","","","",""],["","","","","","","","","","","","",""],["","","","","","","","","","","","",""],["","","","","","","","","","","","",""],["","","","","","","","","","","","",""]]
+                    window.agenda_name_count=[[{},{},{},{},{},{},{},{},{},{},{},{},{}],[{},{},{},{},{},{},{},{},{},{},{},{},{}],[{},{},{},{},{},{},{},{},{},{},{},{},{}],[{},{},{},{},{},{},{},{},{},{},{},{},{}],[{},{},{},{},{},{},{},{},{},{},{},{},{}]]
                     window.fileName="";
                     window.json_num=0;
                     window.obj=[];
@@ -85,7 +85,7 @@
                     window.json_resource=[];//temp array,先暫時寫成本地端的陣列，未來會需要用ajax取得資料
                     window.user=[];//this array will be filled with student's json.
                     window.agenda_count=[[0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0]];
-                    window.agenda_name_count=[["","","","","","","","","","","","",""],["","","","","","","","","","","","",""],["","","","","","","","","","","","",""],["","","","","","","","","","","","",""],["","","","","","","","","","","","",""]]
+                    window.agenda_name_count=[[{},{},{},{},{},{},{},{},{},{},{},{},{}],[{},{},{},{},{},{},{},{},{},{},{},{},{}],[{},{},{},{},{},{},{},{},{},{},{},{},{}],[{},{},{},{},{},{},{},{},{},{},{},{},{}],[{},{},{},{},{},{},{},{},{},{},{},{},{}]]
                     window.fileName="";
                     window.json_num=0;
                     window.obj=[];
@@ -178,6 +178,7 @@
                       alert("Failed to load files"); 
                 }
               }
+            window.user_dept={};
             $('#submit').click(function(){
                 json_num+=obj.length;
                 $.each(obj,function(uk,uv){
@@ -197,12 +198,22 @@
                         $.each(iv,function(jk,jv){
                             if(jv==0)
                             {
-                                if(agenda_name_count[ik][jk]=="沒人可到喔QQ")
-                                {
-                                    agenda_name_count[ik][jk]="";
-                                }
                                 //將有課的name存入目前時段
-                                agenda_name_count[ik][jk]+=current_name
+                                //且將相同部門的放在一起
+                                var has_key=0;
+                                $.each(agenda_name_count[ik][jk],function(key,value){
+                                    if(key==uv['user-dept'])
+                                    {
+                                        value+=current_name;
+                                        has_key=1;
+                                        agenda_name_count[ik][jk][uv['user-dept']]=value;
+                                        return false;
+                                    }
+                                });
+                                if(has_key==0)
+                                {
+                                    agenda_name_count[ik][jk][uv['user-dept']]=current_name;
+                                }
                             }
                         });
                     });
@@ -230,16 +241,21 @@
                         var $td = $("#time-table").find('tr[data-hour=' + (jk+1) + '] td[data-day=' + (ik+1) + ']');     //將目前所在的td位置指派給$td    
                         var $div = $("#time-table").find('tr[data-hour=' + (jk+1) + '] td[data-day=' + (ik+1) + '] div');//將目前所在的div位置指派給$div
                         var $sp = $("#time-table").find('tr[data-hour=' + (jk+1) + '] td[data-day=' + (ik+1) + '] span');//將目前所在的span位置指派給$sp
-                        if(agenda_name_count[ik][jk]=="")
-                        {
-                            agenda_name_count[ik][jk]="沒人可到喔QQ";
-                        }
 
+                        //將目前課堂時段的名字取出
+                        var all_name="";
+                        $.each(agenda_name_count[ik][jk],function(key,value){
+                            all_name+=value;
+                        });
+                        if(all_name=="")
+                        {
+                            all_name=no_one;
+                        }
                         $div.attr({
                             "data-toggle": "tooltip",
                             "data-html":"true",
                             "data-placement": tooltip_position,
-                            "title": agenda_name_count[ik][jk],
+                            "title": all_name,
                             "style": "height: 80%;width:100%",
                             "class": 'table_name'
                         });//放上tooltip顯示有誰可到
@@ -320,9 +336,22 @@
                 var names=$(this).find('.table_name').attr('data-original-title');
                 td_click(names);
             });
+            //toastr設定
+            //不重複出現提示訊息
+            toastr.options = {
+              "preventDuplicates": true,
+            }
             window.td_click = function(names){
-                $('#name_box_content').attr({'style':'padding-top:3px;padding-left:3px;padding-bottom:3px'});
-                $('#name_box_content').html('<h4>'+names+'</h4>');
+                if(names)
+                {
+                    $('#name_box_content').attr({'style':'padding-top:3px;padding-left:3px;padding-bottom:3px'});
+                    $('#name_box_content').html('<h4>'+names+'</h4>');
+                }
+                else
+                {
+                    toastr.warning('尚未分析資料!');
+                }
+                
             }
             var reset=function(){
                 $('#time-table td').empty(); //把目前的time-table清空，好讓下個年級的課程能夠乾淨的顯示
@@ -353,7 +382,7 @@
                 $("#class_credit").text(window.credits);
                 window.name_of_optional_obligatory=[];  //把數過的課程清空       
                 agenda_count=[[0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0]];
-                agenda_name_count=[["","","","","","","","","","","","",""],["","","","","","","","","","","","",""],["","","","","","","","","","","","",""],["","","","","","","","","","","","",""],["","","","","","","","","","","","",""]];
+                agenda_name_count=[[{},{},{},{},{},{},{},{},{},{},{},{},{}],[{},{},{},{},{},{},{},{},{},{},{},{},{}],[{},{},{},{},{},{},{},{},{},{},{},{},{}],[{},{},{},{},{},{},{},{},{},{},{},{},{}],[{},{},{},{},{},{},{},{},{},{},{},{},{}]];
                 user=[];
                 json_num=0;
                 obj=[];
