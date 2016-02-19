@@ -244,12 +244,15 @@
 
                         //將目前課堂時段的名字取出
                         var all_name="";
-                        $.each(agenda_name_count[ik][jk],function(key,value){
-                            all_name+=value;
-                        });
-                        if(all_name=="")
+                        if(agenda_name_count[ik][jk])
                         {
-                            all_name=no_one;
+                            $.each(agenda_name_count[ik][jk],function(key,value){
+                                all_name+=value;
+                            });
+                        }
+                        else
+                        {
+                           all_name=no_one; 
                         }
                         $div.attr({
                             "data-toggle": "tooltip",
