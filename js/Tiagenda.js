@@ -252,7 +252,6 @@
                         //判斷是否為空字典
                         if(!jQuery.isEmptyObject(agenda_name_count[ik][jk]))
                         {
-                            console.log(agenda_name_count[ik][jk]);
                             $.each(agenda_name_count[ik][jk],function(key,value){
                                 all_name+=value;
                             });
