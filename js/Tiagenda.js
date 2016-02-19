@@ -64,10 +64,10 @@
                             });
                         });                                         
                     });
-                    
+                    //用localStorage.length判斷,在firefox或chrome都沒問題
+                    //如果判斷localstorage是否為空,firefox會有問題
                     if(localStorage.length!=0)
                     {
-                        console.log(jQuery.isEmptyObject(localStorage));
                         agenda_count=$.parseJSON(localStorage['agenda_count']);
                         agenda_name_count=$.parseJSON(localStorage['agenda_name_count']);
                         json_num=parseInt(localStorage['json_num']);
@@ -404,6 +404,7 @@
                 fileName="";
                 $('#name_box_content').attr({'style':''});
                 $('#name_box_content').html('');
+                //用localStorage.clear()才能徹底清除localstorage
                 localStorage.clear(); 
             } 
         })(jQuery);
