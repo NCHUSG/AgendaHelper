@@ -66,7 +66,6 @@
                     });
                     if(localStorage['agenda_count']!=""&&localStorage['agenda_name_count']!="")
                     {
-                        console.log(localStorage['agenda_name_count']);
                         agenda_count=$.parseJSON(localStorage['agenda_count']);
                         agenda_name_count=$.parseJSON(localStorage['agenda_name_count']);
                         json_num=parseInt(localStorage['json_num']);
@@ -92,7 +91,6 @@
                     window.json_num=0;
                     window.obj=[];
                     window.files=[];
-                    console.log("up");
                     //Tiagenda的初始值就是每一段時間都沒有被重疊到
                     $.each(window.json_resource,function(kk,kv){
                         $.getJSON(kv, function(json){  //getJSON會用function(X)傳回X的物件或陣列                    
@@ -205,16 +203,12 @@
                                 //且將相同部門的放在一起
                                 var has_key=0;
                                 //判斷是否為空字典
-                                console.log(typeof(agenda_name_count[ik][jk]));
                                 if(!jQuery.isEmptyObject(agenda_name_count[ik][jk]))
                                 {
                                     var agenda_name_count_obj=agenda_name_count[ik][jk];
-                                    console.log(typeof(agenda_name_count_obj));
                                     $.each(agenda_name_count_obj,function(key,value){
-                                        console.log("3");
                                         if(key==uv['user-dept'])
                                         {
-                                            console.log("4");
                                             value+=current_name;
                                             has_key=1;
                                             agenda_name_count[ik][jk][uv['user-dept']]=value;
