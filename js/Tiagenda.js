@@ -158,6 +158,7 @@
 
             });
             //選擇完檔案案確定後,以下function會觸發
+            window.if_select=0
             document.getElementById('file').addEventListener('change', readMultipleFiles, false);
               function readMultipleFiles(evt) {
                 //Retrieve all the files from the FileList object
@@ -177,63 +178,73 @@
                         })(f);
                         r.readAsText(f);
                     }  
+                    if_select=1;
                 } else {
                       alert("Failed to load files"); 
                 }
               }
             window.user_dept={};
             $('#submit').click(function(){
-                json_num+=obj.length;
-                $.each(obj,function(uk,uv){
-                    has_class=[[0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0]];//是否有課的陣列
-                    $.each(uv.time_table,function(hk,hv){
-                        $.each(hv.time_parsed,function(ik, iv){
-                            $.each(iv.time,function(jk, jv){
-                                agenda_count[iv.day-1][jv-1]++;//那門課的重疊次數加一  
-                                has_class[iv.day-1][jv-1]=1;//判斷是否有課=1               
-                            });                    
+                //是否有選擇檔案
+                if(if_select)
+                {
+                    json_num+=obj.length;
+                    $.each(obj,function(uk,uv){
+                        has_class=[[0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0]];//是否有課的陣列
+                        $.each(uv.time_table,function(hk,hv){
+                            $.each(hv.time_parsed,function(ik, iv){
+                                $.each(iv.time,function(jk, jv){
+                                    agenda_count[iv.day-1][jv-1]++;//那門課的重疊次數加一  
+                                    has_class[iv.day-1][jv-1]=1;//判斷是否有課=1               
+                                });                    
+                            });
+                        });
+                        current_name=uv['user-dept']+':'+uv['user-name']+'<br>'    //存放目前json的name
+                        fileName=fileName+uv['user-name']+".json";
+                        //將有課的時段的tooltip加上名子
+                        $.each(has_class,function(ik,iv){
+                            $.each(iv,function(jk,jv){
+                                if(jv==0)
+                                {
+                                    //將有課的name存入目前時段
+                                    //且將相同部門的放在一起
+                                    var has_key=0;
+                                    //判斷是否為空字典
+                                    if(!jQuery.isEmptyObject(agenda_name_count[ik][jk]))
+                                    {
+                                        var agenda_name_count_obj=agenda_name_count[ik][jk];
+                                        $.each(agenda_name_count_obj,function(key,value){
+                                            if(key==uv['user-dept'])
+                                            {
+                                                value+=current_name;
+                                                has_key=1;
+                                                agenda_name_count[ik][jk][uv['user-dept']]=value;
+                                                return false;
+                                            }
+                                        });
+                                    }
+                                    
+                                    if(has_key==0)
+                                    {
+                                        agenda_name_count[ik][jk][uv['user-dept']]=current_name;
+                                    }
+                                }
+                            });
                         });
                     });
-                    current_name=uv['user-dept']+':'+uv['user-name']+'<br>'    //存放目前json的name
-                    fileName=fileName+uv['user-name']+".json";
-                    //將有課的時段的tooltip加上名子
-                    $.each(has_class,function(ik,iv){
-                        $.each(iv,function(jk,jv){
-                            if(jv==0)
-                            {
-                                //將有課的name存入目前時段
-                                //且將相同部門的放在一起
-                                var has_key=0;
-                                //判斷是否為空字典
-                                if(!jQuery.isEmptyObject(agenda_name_count[ik][jk]))
-                                {
-                                    var agenda_name_count_obj=agenda_name_count[ik][jk];
-                                    $.each(agenda_name_count_obj,function(key,value){
-                                        if(key==uv['user-dept'])
-                                        {
-                                            value+=current_name;
-                                            has_key=1;
-                                            agenda_name_count[ik][jk][uv['user-dept']]=value;
-                                            return false;
-                                        }
-                                    });
-                                }
-                                
-                                if(has_key==0)
-                                {
-                                    agenda_name_count[ik][jk][uv['user-dept']]=current_name;
-                                }
-                            }
-                        });
-                    });
-                });
-                $('#file_name').attr("value","上傳成功");
-                $('#upload_file_name').text("已上傳:"+fileName);
-                $('#not_upload_file_name').empty();
-                localStorage['fileName']=fileName;
-                localStorage['agenda_count']=JSON.stringify(agenda_count);
-                localStorage['agenda_name_count']=JSON.stringify(agenda_name_count);
-                localStorage['json_num']=json_num;
+                    $('#file_name').attr("value","上傳成功");
+                    $('#upload_file_name').text("已上傳:"+fileName);
+                    $('#not_upload_file_name').empty();
+                    localStorage['fileName']=fileName;
+                    localStorage['agenda_count']=JSON.stringify(agenda_count);
+                    localStorage['agenda_name_count']=JSON.stringify(agenda_name_count);
+                    localStorage['json_num']=json_num;
+                    if_select=0
+                }  
+                else
+                {
+                    toastr.warning('尚未選擇檔案!');
+                }
             });
 
             window.week = ["一", "二", "三", "四", "五"];
