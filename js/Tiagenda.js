@@ -231,6 +231,9 @@
                 $('#upload_file_name').text("已上傳:"+fileName);
                 $('#not_upload_file_name').empty();
                 localStorage['fileName']=fileName;
+                localStorage['agenda_count']=JSON.stringify(agenda_count);
+                localStorage['agenda_name_count']=JSON.stringify(agenda_name_count);
+                localStorage['json_num']=json_num;
             });
 
             window.week = ["一", "二", "三", "四", "五"];
@@ -340,10 +343,7 @@
                     }); 
                 });
                 $('#tab a[href="#profile"]').tab('show');
-                //儲存目前的資料,讓使用者在重新整理頁面後,也保存資料
-                localStorage['agenda_count']=JSON.stringify(agenda_count);
-                localStorage['agenda_name_count']=JSON.stringify(agenda_name_count);
-                localStorage['json_num']=json_num;
+                //儲存目前的資料,讓使用者在重新整理頁面後,也保存資料 
             }
             // 將tooltip的內容顯示在結果中
             $('td').click(function(){
