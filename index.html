@@ -192,6 +192,9 @@
         .tab-content{
             background-color: #E2A9F3
         }
+        .demo_model{
+            float: right;
+        }
         </style>
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -229,10 +232,24 @@
                         <br><br>
                     </div>
                     <div class="col-xs-12" id="btn-tools">
-                        <button input type="button" class="btn btn-success btn-block" id="demo">
-                            <span class="fa fa-check-circle fa-1x fa-fw "></span>分析
+                        <button type="button" class="btn btn-sample2 btn-block demo2">
+                            <span class="fa fa-file-o  fa-1x fa-fw "></span>新增
                         </button>
                         <br><br>
+                    </div>
+                    <br>
+                    <div class="col-xs-12" id="btn-tools">
+                        <button type="button" class="btn btn-info btn-block" id="modify"  data-toggle="modal" data-target="#focus2">
+                            <span class="fa fa-pencil-square-o fa-1x fa-fw"></span>修改
+                        </button>
+                        <br><br>
+                    </div>
+                    <br>
+                    <div class="col-xs-12" id="btn-tools">        
+                        <button type="button" class="btn btn-sample btn-block" data-toggle="modal" data-target="#exampleModal">
+                            <span class="fa fa-floppy-o fa-1x fa-fw"></span>儲存與輸出
+                        </button>  
+                        <br><br>                
                     </div>
                     <br>
                     <div class="col-xs-12" id="btn-tools">
@@ -265,22 +282,80 @@
                                 <!-- iframe是用來運作upload.php的隱藏頁面 -->
                                 <iframe name="hiddenFrame" class="hide"></iframe>
                                 <!-- 上傳檔案的form,target="hiddenFrame"是為了讓upload.php運作在iframe中,否則會載入upload.php來取代目前的html頁面 -->
-                                <form >
+                                <form>
                                     <div class="fileUpload btn btn-primary">
                                         <span>選擇檔案</span>
                                         <input id="file" name="file" type="file" accept=".json" class="upload" multiple="multiple" />
                                     </div>
-                                    <input id="file_name" value="尚未選擇檔案" disabled="disabled" />
-                                    <button id="submit" type="reset" class="btn btn-default">開始上傳</button>
+                                    <input class="file file_name submit1" value="尚未選擇檔案" disabled="disabled" />
+                                    <button type="reset" id="submit1" class="btn btn-default ">開始上傳</button>
+                                    <button input type="button" class="btn btn-success demo_model" id="demo">
+                                        <span class="fa fa-check-circle fa-1x fa-fw "></span>分析
+                                    </button>
                                 </form>
-                                <div id="not_upload_file_name"></div>
-                                <div id="upload_file_name"></div>
+                                <div class="file not_upload_file_name"></div>
+                                <div class="upload_file_name submit1"></div>
                             </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                         </div>
                         </div>
                     </div>
+                </div>
+                <div class="modal fade modal fade bs-example-modal-lg" id="focus2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h3 class="modal-title" id="myModalLabel"><span class="fa fa-heart fa-1x fa-fw"></span>選擇檔案：</h3>
+                                <!-- iframe是用來運作upload.php的隱藏頁面 -->
+                                <iframe name="hiddenFrame" class="hide"></iframe>
+                                <!-- 上傳檔案的form,target="hiddenFrame"是為了讓upload.php運作在iframe中,否則會載入upload.php來取代目前的html頁面 -->
+                                <form >
+                                    <div class="fileUpload btn btn-primary">
+                                        <span>選擇檔案</span>
+                                        <input id="modify_file" name="file" type="file" accept=".json" class="upload"/>
+                                    </div>
+                                    <input class="modify_file file_name submit2" value="尚未選擇檔案" disabled="disabled" />
+                                    <button type="reset" id="submit2" class="btn btn-default ">開始上傳</button>
+                                    <button type="button" class="btn btn-success demo2 demo_model" id="demo2">
+                                        <span class="fa fa-check-circle fa-1x fa-fw "></span>分析
+                                    </button>                                
+                                </form>
+                                <div class="modify_file not_upload_file_name"></div>
+                                <div class="upload_file_name submit2"></div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="exampleModalLabel">儲存與輸出</h4>
+                      </div>
+                      <div class="modal-body">
+                        <form action="" method="post">
+                          <div class="form-group">
+                            <label for="recipient-name" class="control-label">您的姓名:</label>
+                            <input type="text" class="form-control" id="user_name">
+                          </div>
+                          <div class="form-group">
+                            <label for="message-text" class="control-label">部門名稱:</label>
+                            <textarea class="form-control" id="user_dept"></textarea>
+                          </div>
+                        </form>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" id="download_json">儲存課程資料</button>
+                      </div>
+                    </div>
+                  </div>
                 </div>
             </div>
             <div id="non-display">
@@ -289,7 +364,7 @@
             <div class="col-md-10">
                 <div id="tab">
                   <!-- Nav tabs -->
-                  <ul class="nav nav-tabs" role="tablist">
+                  <ul class="nav nav-pills" role="tablist">
                     <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">使用方法</a></li>
                     <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">分析結果</a></li>
                   </ul>
@@ -459,9 +534,47 @@
                                         <td data-day="3"><div><span></span></div></td>
                                         <td data-day="4"><div><span></span></div></td>
                                         <td data-day="5"><div><span></span></div></td>
-
                                     </tr>
-                                    
+                                    <tr data-hour="10" class="active">
+                                        <th>
+                                            <h3>10</h3>
+                                        </th>
+                                        <td data-day="1"><div><span></span></div></td>
+                                        <td data-day="2"><div><span></span></div></td>
+                                        <td data-day="3"><div><span></span></div></td>
+                                        <td data-day="4"><div><span></span></div></td>
+                                        <td data-day="5"><div><span></span></div></td>
+                                    </tr>
+                                    <tr data-hour="11" class="active">
+                                        <th>
+                                            <h3>11</h3>
+                                        </th>
+                                        <td data-day="1"><div><span></span></div></td>
+                                        <td data-day="2"><div><span></span></div></td>
+                                        <td data-day="3"><div><span></span></div></td>
+                                        <td data-day="4"><div><span></span></div></td>
+                                        <td data-day="5"><div><span></span></div></td>
+                                    </tr>
+                                    <tr data-hour="12" class="active">
+                                        <th>
+                                            <h3>12</h3>
+                                        </th>
+                                        <td data-day="1"><div><span></span></div></td>
+                                        <td data-day="2"><div><span></span></div></td>
+                                        <td data-day="3"><div><span></span></div></td>
+                                        <td data-day="4"><div><span></span></div></td>
+                                        <td data-day="5"><div><span></span></div></td>
+                                    </tr>
+                                    <tr data-hour="13" class="active">
+                                        <th>
+                                            <h3>13</h3>
+                                        </th>
+                                        <td data-day="1"><div><span></span></div></td>
+                                        <td data-day="2"><div><span></span></div></td>
+                                        <td data-day="3"><div><span></span></div></td>
+                                        <td data-day="4"><div><span></span></div></td>
+                                        <td data-day="5"><div><span></span></div></td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -476,5 +589,7 @@
             <script src="bootstrap/js/bootstrap.min.js"></script>
             <script src="toastr/toastr.js"></script>
             <script src="js/Tiagenda.js"></script>
+            <script src="js/FileSaver.js"></script>
+            <script src="js/FileSaver.min.js"></script>
         </body>
     </html>

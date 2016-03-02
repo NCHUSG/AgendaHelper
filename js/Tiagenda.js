@@ -7,63 +7,19 @@
                 //如果先前有使用過(沒有關機),會直接讀取之前的資料
                 if (typeof(Storage) !== "undefined") {
                     // Store
-                    window.credits=0//一開始的學分數是0
-                    window.courses = {};//宣告一個空的物件
-                    window.course_of_majors = {};//宣告一個空的物件
-                    window.course_of_day = {};  //這是宣告日期的陣列
-                    window.teacher_course = {}; //這是以老師姓名為index的陣列
-                    window.name_of_course = {}; //這是以課程名稱為index的陣列
-                    window.name_of_optional_obligatory = [] //這是用來存系上的必修課，檢查有沒有課名是重複的，若有就讓使用者自行決定要上哪堂
-                    window.json_resource=[];//temp array,先暫時寫成本地端的陣列，未來會需要用ajax取得資料
-                    window.user=[];//this array will be filled with student's json.
                     window.agenda_count=[[0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0]];
+                    window.modify_agenda_count=[[0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0]];
                     window.agenda_name_count=[[{},{},{},{},{},{},{},{},{},{},{},{},{}],[{},{},{},{},{},{},{},{},{},{},{},{},{}],[{},{},{},{},{},{},{},{},{},{},{},{},{}],[{},{},{},{},{},{},{},{},{},{},{},{},{}],[{},{},{},{},{},{},{},{},{},{},{},{},{}]];
                     window.fileName="";
+                    window.modify_userName="";
+                    window.modify_userDept="";
                     window.json_num=0;
                     window.obj=[];
                     window.files=[];
-                    //Tiagenda的初始值就是每一段時間都沒有被重疊到
-                    $.each(window.json_resource,function(kk,kv){
-                        $.getJSON(kv, function(json){  //getJSON會用function(X)傳回X的物件或陣列                    
-                            $("#class_credit").text(0);
-                            window.language="zh_TW";//固定顯示語言為中文
-                            $.each(json.time_table, function(ik, iv){
-                                if(typeof(window.course_of_majors[iv.for_dept]) == 'undefined')//如果這一列(列的名稱為索引值key)是空的也就是undefined，那就對他進行初始化，{}物件裡面可以放任意的東西，在下面會把很多陣列塞進這個物件裡面
-                                    window.course_of_majors[iv.for_dept] = {};
-                                if(typeof(window.course_of_majors[iv.for_dept][iv.class]) == 'undefined'){
-                                    window.course_of_majors[iv.for_dept][iv.class] = [];//如果這一行(列的名稱為索引值key)是空的也就是undefined，那就對他進行初始化，[]裡面的是放陣列
-                                }
-                                window.course_of_majors[iv.for_dept][iv.class].push(iv.code);//把東西推進這個陣列裡，概念跟stack一樣
-                                if(typeof(window.courses[iv.code])=='undefined'){
-                                    window.courses[iv.code]=[];
-                                }
-                                window.courses[iv.code].push(iv);//這邊可以直接把選課號當作索引值key，裡面的值為object
-                                $.each(iv.time_parsed, function(jk, jv){//建立日期的陣列
-                                    $.each(jv.time, function(mk, mv){
-                                        if(typeof(window.course_of_day[jv.day])=='undefined'){
-                                            window.course_of_day[jv.day]={};
-                                        }
-                                        if(typeof(window.course_of_day[jv.day][mv])=='undefined'){
-                                            window.course_of_day[jv.day][mv]=[];
-                                        }
-                                        window.course_of_day[jv.day][mv].push(iv);
-                                    })
-                                })
-                                if(typeof(window.teacher_course[iv.professor])=='undefined'){//建立老師名稱的陣列
-                                    window.teacher_course[iv.professor]=[];
-                                }
-                                window.teacher_course[iv.professor].push(iv);
-                                if(typeof(window.name_of_course[iv.title_parsed.zh_TW])=='undefined'){//中文課名陣列
-                                    window.name_of_course[iv.title_parsed.zh_TW]=[];
-                                }
-                                window.name_of_course[iv.title_parsed.zh_TW].push(iv);
-                                if(typeof(window.name_of_course[iv.title_parsed.en_US])=='undefined'){//英文課名陣列
-                                    window.name_of_course[iv.title_parsed.en_US]=[];
-                                }
-                                window.name_of_course[iv.title_parsed.en_US].push(iv);
-                            });
-                        });                                         
-                    });
+                    window.no_one="沒人可以到喔";
+                    window.current_name="" //存放目前json的name 
+                    window.td_mode=1;
+                    window.demo_mode=1;
                     //用localStorage.length判斷,在firefox或chrome都沒問題
                     //如果判斷localstorage是否為空,firefox會有問題
                     if(localStorage.length!=0)
@@ -71,98 +27,54 @@
                         agenda_count=$.parseJSON(localStorage['agenda_count']);
                         agenda_name_count=$.parseJSON(localStorage['agenda_name_count']);
                         json_num=parseInt(localStorage['json_num']);
-                        demo_click();
+                        demo_click(agenda_count,json_num,"demo");
                         fileName=localStorage['fileName'];
                         $('#upload_file_name').text("已上傳:"+fileName);
                     }
                 } 
                 else 
                 {
-                    window.credits=0;//一開始的學分數是0
-                    window.courses = {};//宣告一個空的物件
-                    window.course_of_majors = {};//宣告一個空的物件
-                    window.course_of_day = {};  //這是宣告日期的陣列
-                    window.teacher_course = {}; //這是以老師姓名為index的陣列
-                    window.name_of_course = {}; //這是以課程名稱為index的陣列
-                    window.name_of_optional_obligatory = []; //這是用來存系上的必修課，檢查有沒有課名是重複的，若有就讓使用者自行決定要上哪堂
-                    window.json_resource=[];//temp array,先暫時寫成本地端的陣列，未來會需要用ajax取得資料
-                    window.user=[];//this array will be filled with student's json.
                     window.agenda_count=[[0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0]];
+                    window.modify_agenda_count=[[0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0]];
                     window.agenda_name_count=[[{},{},{},{},{},{},{},{},{},{},{},{},{}],[{},{},{},{},{},{},{},{},{},{},{},{},{}],[{},{},{},{},{},{},{},{},{},{},{},{},{}],[{},{},{},{},{},{},{},{},{},{},{},{},{}],[{},{},{},{},{},{},{},{},{},{},{},{},{}]];
                     window.fileName="";
+                    window.modify_userName="";
+                    window.modify_userDept="";
                     window.json_num=0;
                     window.obj=[];
                     window.files=[];
-                    //Tiagenda的初始值就是每一段時間都沒有被重疊到
-                    $.each(window.json_resource,function(kk,kv){
-                        $.getJSON(kv, function(json){  //getJSON會用function(X)傳回X的物件或陣列                    
-                            $("#class_credit").text(0);
-                            window.language="zh_TW";//固定顯示語言為中文
-                            $.each(json.time_table, function(ik, iv){
-                                if(typeof(window.course_of_majors[iv.for_dept]) == 'undefined')//如果這一列(列的名稱為索引值key)是空的也就是undefined，那就對他進行初始化，{}物件裡面可以放任意的東西，在下面會把很多陣列塞進這個物件裡面
-                                    window.course_of_majors[iv.for_dept] = {};
-                                if(typeof(window.course_of_majors[iv.for_dept][iv.class]) == 'undefined'){
-                                    window.course_of_majors[iv.for_dept][iv.class] = [];//如果這一行(列的名稱為索引值key)是空的也就是undefined，那就對他進行初始化，[]裡面的是放陣列
-                                }
-                                window.course_of_majors[iv.for_dept][iv.class].push(iv.code);//把東西推進這個陣列裡，概念跟stack一樣
-                                if(typeof(window.courses[iv.code])=='undefined'){
-                                    window.courses[iv.code]=[];
-                                }
-                                window.courses[iv.code].push(iv);//這邊可以直接把選課號當作索引值key，裡面的值為object
-                                $.each(iv.time_parsed, function(jk, jv){//建立日期的陣列
-                                    $.each(jv.time, function(mk, mv){
-                                        if(typeof(window.course_of_day[jv.day])=='undefined'){
-                                            window.course_of_day[jv.day]={};
-                                        }
-                                        if(typeof(window.course_of_day[jv.day][mv])=='undefined'){
-                                            window.course_of_day[jv.day][mv]=[];
-                                        }
-                                        window.course_of_day[jv.day][mv].push(iv);
-                                    })
-                                })
-                                if(typeof(window.teacher_course[iv.professor])=='undefined'){//建立老師名稱的陣列
-                                    window.teacher_course[iv.professor]=[];
-                                }
-                                window.teacher_course[iv.professor].push(iv);
-                                if(typeof(window.name_of_course[iv.title_parsed.zh_TW])=='undefined'){//中文課名陣列
-                                    window.name_of_course[iv.title_parsed.zh_TW]=[];
-                                }
-                                window.name_of_course[iv.title_parsed.zh_TW].push(iv);
-                                if(typeof(window.name_of_course[iv.title_parsed.en_US])=='undefined'){//英文課名陣列
-                                    window.name_of_course[iv.title_parsed.en_US]=[];
-                                }
-                                window.name_of_course[iv.title_parsed.en_US].push(iv);
-                            });
-                        });                                         
-                    });
+                    window.no_one="沒人可以到喔";
+                    window.current_name="" //存放目前json的name 
+                    window.td_mode=1;
+                    window.demo_mode=1;
                 } 
                
                 $(".clear-button").click(function()
                 {
                     reset();
-                    $("td").html('<div><span></span></div>');  //再把加號的按鈕填上去
+                    $("td").html('<div><span></span></div>');
                     $("td").attr({"style":""});
                 });
             });
+        
             //顯示選擇幾個檔案
-            $('input[type="file"]').change(function(e){
-                $('#file_name').attr("value","共"+e.target.files.length+"個檔案");
-            });
             //顯示要上傳檔案的名稱
             $('input[type="file"]').change(function(e){
+                $('.file_name.'+e.target.id).attr("value","共"+e.target.files.length+"個檔案");
                 var not_upload_file_name="";
                 for (var i=0;i<e.target.files.length; i++) {
                     not_upload_file_name += e.target.files[i].name;
                 }
-                $('#not_upload_file_name').text("未上傳:"+not_upload_file_name);
+                $('.not_upload_file_name.'+e.target.id).text("未上傳:"+not_upload_file_name);
 
             });
-            //選擇完檔案案確定後,以下function會觸發
+            //選擇完檔案按確定後,以下function會觸發
             window.if_select=0
             document.getElementById('file').addEventListener('change', readMultipleFiles, false);
-              function readMultipleFiles(evt) {
+            document.getElementById('modify_file').addEventListener('change', readMultipleFiles, false);
+            function readMultipleFiles(evt) {
                 //Retrieve all the files from the FileList object
-                files = evt.target.files; 
+                files = evt.target.files;
                 obj=[];
                 //儲存檔案
                 if (files) {
@@ -177,14 +89,14 @@
                             };
                         })(f);
                         r.readAsText(f);
-                    }  
+                    } 
                     if_select=1;
-                } else {
+                } 
+                else {
                       alert("Failed to load files"); 
                 }
-              }
-            window.user_dept={};
-            $('#submit').click(function(){
+            }
+            $('#submit1').click(function(){
                 //是否有選擇檔案
                 if(if_select)
                 {
@@ -223,7 +135,6 @@
                                             }
                                         });
                                     }
-                                    
                                     if(has_key==0)
                                     {
                                         agenda_name_count[ik][jk][uv['user-dept']]=current_name;
@@ -232,33 +143,68 @@
                             });
                         });
                     });
-                    $('#file_name').attr("value","上傳成功");
-                    $('#upload_file_name').text("已上傳:"+fileName);
-                    $('#not_upload_file_name').empty();
-                    localStorage['fileName']=fileName;
-                    localStorage['agenda_count']=JSON.stringify(agenda_count);
-                    localStorage['agenda_name_count']=JSON.stringify(agenda_name_count);
-                    localStorage['json_num']=json_num;
-                    if_select=0
+                    after_submit(fileName,"submit1");
+                }
+                else
+                {
+                    toastr.warning('尚未選擇檔案!');
+                }
+            });
+            $('#submit2').click(function(){
+                //是否有選擇檔案
+                if(if_select)
+                {
+                    modify_agenda_count=[[0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0]];
+                    var file_name="";
+                    $.each(obj,function(uk,uv){
+                        $.each(uv.time_table,function(hk,hv){
+                            $.each(hv.time_parsed,function(ik, iv){
+                                $.each(iv.time,function(jk, jv){
+                                    modify_agenda_count[iv.day-1][jv-1]=1;//那門課的重疊次數加一              
+                                });                    
+                            });
+                        });
+                    });
+                    file_name=obj[0]['user-name']+".json";
+                    after_submit(file_name,"submit2");
+                    modify_userName=obj[0]['user-name'];
+                    modify_userDept=obj[0]['user-dept'];
                 }  
                 else
                 {
                     toastr.warning('尚未選擇檔案!');
                 }
             });
-
-            window.week = ["一", "二", "三", "四", "五"];
-            window.no_one="沒人可以到喔";
-            window.once=1;//判斷是否是第一次按
-            window.current_name="" //存放目前json的name 
+            function after_submit(name,id)
+            {
+                $('.file_name.'+id).attr("value","上傳成功");
+                $('.upload_file_name.'+id).text("已上傳:"+name);
+                $('.not_upload_file_name').empty();
+                if(id=="submit1")
+                {
+                    localStorage['fileName']=name;
+                    localStorage['agenda_count']=JSON.stringify(agenda_count);
+                    localStorage['agenda_name_count']=JSON.stringify(agenda_name_count);
+                    localStorage['json_num']=json_num;
+                }
+                if_select=0
+            }
             $("#demo").click(function(){    
-                demo_click();
+                demo_click(agenda_count,json_num,"demo");
+                td_mode=1;
+                demo_mode=1;
+
             });
-            window.demo_click = function(){
+            $(".demo2").click(function(){   
+                demo_click(modify_agenda_count,1,"demo2");
+                td_mode=2;
+                demo_mode=2;
+            });
+            window.demo_click = function(count,num,demo){
                 $("td").html('<div><span></span></div>');
                 $("td").attr({"style":""}); 
                 //找尋每個時段有多少人有課的值
-                $.each(agenda_count,function(ik,iv){
+                $.each(count,function(ik,iv){
                     $.each(iv,function(jk,jv){
                         var tooltip_position="";
                         var $td = $("#time-table").find('tr[data-hour=' + (jk+1) + '] td[data-day=' + (ik+1) + ']');     //將目前所在的td位置指派給$td    
@@ -279,7 +225,9 @@
                         {
                            all_name=no_one; 
                         }
-                        $div.attr({
+                        if(demo=="demo")
+                        {
+                            $div.attr({
                             "data-toggle": "tooltip",
                             "data-html":"true",
                             "data-placement": tooltip_position,
@@ -287,6 +235,7 @@
                             "style": "height: 80%;width:100%",
                             "class": 'table_name'
                         });//放上tooltip顯示有誰可到
+                        }
                         $sp.attr({
                             "class":"",
                             "style":"color:black;font-weight:bold"
@@ -300,7 +249,7 @@
                             tooltip_position="top";
                         }
 
-                        if(jv>=0&&jv<=json_num/4&&jv!=json_num)
+                        if(jv>=0&&jv<=num/4&&jv!=num)
                         {
                             $div.attr({
                                 "data-placement": tooltip_position,
@@ -308,9 +257,9 @@
                             $td.attr({
                                 "style": "color:#3074B5;background-color:#58FA58",
                             });//0~總數的1/4個人有課就會改綠色;
-                            $sp.html("<h1>"+(json_num-jv)+"</h1>");//顯示目前時段可到人數
+                            $sp.html("<h1>"+(num-jv)+"</h1>");//顯示目前時段可到人數
                         }
-                        else if(jv>json_num/4&&jv<=json_num/2&&jv!=json_num)
+                        else if(jv>num/4&&jv<=num/2&&jv!=num)
                         {
                             $div.attr({
                                 "data-placement": tooltip_position,
@@ -318,9 +267,9 @@
                             $td.attr({
                                 "style": "color:#3074B5;background-color:#81F7F3",
                             });//總數的1/4個人~總數的2/4個人有課就會改藍色;
-                            $sp.html("<h1>"+(json_num-jv)+"</h1>");//顯示目前時段可到人數
+                            $sp.html("<h1>"+(num-jv)+"</h1>");//顯示目前時段可到人數
                         }
-                        else if(jv>json_num/2&&jv<=json_num*3/4&&jv!=json_num)
+                        else if(jv>num/2&&jv<=num*3/4&&jv!=num)
                         {
                             $div.attr({
                                 "data-placement": tooltip_position,
@@ -328,9 +277,9 @@
                             $td.attr({
                                 "style": "color:#3074B5;background-color:#F4FA58",
                             });//總數的2/4個人~總數的3/4個人有課就會改黃色;
-                            $sp.html("<h1>"+(json_num-jv)+"</h1>");//顯示目前時段可到人數
+                            $sp.html("<h1>"+(num-jv)+"</h1>");//顯示目前時段可到人數
                         }
-                        else if(jv>json_num*3/4&&jv<json_num&&jv!=json_num)
+                        else if(jv>num*3/4&&jv<num&&jv!=num)
                         {
                             $div.attr({
                                 "data-placement": tooltip_position,
@@ -338,7 +287,7 @@
                             $td.attr({
                                 "style": "color:#3074B5;background-color:#FF8000",
                             });//總數的3/4個人~總數有課就會改黃色;
-                            $sp.html("<h1>"+(json_num-jv)+"</h1>");//顯示目前時段可到人數
+                            $sp.html("<h1>"+(num-jv)+"</h1>");//顯示目前時段可到人數
                         }
                         else
                         {
@@ -348,9 +297,13 @@
                             $td.attr({
                                 "style": "color:#3074B5;background-color:#FA5858",
                             });//全部有課就會改紅色;
-                            $sp.html("<h1>"+(json_num-jv)+"</h1>");//顯示目前時段可到人數
+                            $sp.html("<h1>"+(num-jv)+"</h1>");//顯示目前時段可到人數
                         }
-                        $('[data-toggle="tooltip"]').tooltip(); //讓tooltip功能綁上去            
+                        if(demo=="demo")
+                        {
+                            $('[data-toggle="tooltip"]').tooltip(); //讓tooltip功能綁上去
+                        }
+                                    
                     }); 
                 });
                 $('#tab a[href="#profile"]').tab('show');
@@ -358,9 +311,64 @@
             }
             // 將tooltip的內容顯示在結果中
             $('td').click(function(){
-                var names=$(this).find('.table_name').attr('data-original-title');
-                td_click(names);
+                if(td_mode==1)
+                {
+                    var names=$(this).find('.table_name').attr('data-original-title');
+                    td_click(names);
+                }
+                else
+                {
+                    if($(this).css('background-color')=="rgb(250, 88, 88)")
+                    {
+                        $(this).css('background-color','rgb(88, 250, 88)');
+                        modify_agenda_count[$(this).attr('data-day')-1][$(this).parent().attr('data-hour')-1]=0;
+                    }
+                    else
+                    {
+                        $(this).css('background-color','rgb(250, 88, 88)');
+                        modify_agenda_count[$(this).attr('data-day')-1][$(this).parent().attr('data-hour')-1]=1;
+                    }
+                    var current_num=$(this).find('span').text();
+                    $(this).find('span').html("<h1>"+(1-current_num)+"</h1>");
+                }
             });
+
+            //新增或修改後json檔下載
+            window.json={"user-name":"","user-dept":"","time_table":[]};
+            $('#download_json').click(function(){
+                json={"user-name":"","user-dept":"","time_table":[]};
+                $.each(modify_agenda_count,function(mk,mv){
+                    var json_time_table={"time_parsed":[{"day":1,"time":[]}]};
+                    json_time_table.time_parsed[0].day=mk+1;
+                    var a=0;
+                    $.each(mv,function(nk,nv){
+                        if(nv==1)
+                        {
+                            nv+=a;
+                            json_time_table.time_parsed[0].time.push(nv);
+
+                        }
+                        a+=1;
+                    });  
+                    json.time_table.push(json_time_table);
+                });
+                fileSaver(json);
+            });
+            function fileSaver(json){
+                json['user-name']=$('#user_name').val();
+                json['user-dept']=$('#user_dept').val();
+                add_to_local();
+                var filename = $('#user_name').val();
+                var json_string =  JSON.stringify(json);
+                var blob = new Blob([json_string], {type: "application/json"});//這是存檔的物件
+                saveAs(blob, filename+".json");
+            }
+            var add_to_local =function(){
+                if(typeof(Storage) !== "undefined") {//如果typeof(Storage)!==undefined，代表他的瀏覽器有支援localstorage
+                    stringify=JSON.stringify(window.user);
+                    localStorage['jsonstorage']=stringify;
+                }
+            }
             //toastr設定
             //不重複出現提示訊息
             toastr.options = {
@@ -380,42 +388,33 @@
             }
             var reset=function(){
                 $('#time-table td').empty(); //把目前的time-table清空，好讓下個年級的課程能夠乾淨的顯示
-                $('#obligatory-post').empty();//以下是要清掉選修課程、指定時間搜尋等課程
-                $('#freshman').empty();
-                $('#sophomore').empty();
-                $('#senior').empty();
-                $('#junior').empty();
-                $('#fifth-grade').empty();
-                $('#sixth-grade').empty();
-                $('#seventh-grade').empty();
-                $('#whole-school').empty();
-                $('#humanities').empty();
-                $('#social').empty();
-                $('#natural').empty();
-                $('#chinese').empty();
-                $('#english').empty();
-                $('#PE-post').empty();
-                $('#military-post').empty();
-                $('#teacher-post').empty();
-                $('#foreign-post').empty();
-                $('#non-graded-optional-post').empty();
-                $('#search-post').empty();
-                $('#file_name').attr("value","尚未選擇檔案");
-                $('#upload_file_name').empty();
-                $('#not_upload_file_name').empty();
-                window.credits=0;
+                window.credits=0;   
                 $("#class_credit").text(window.credits);
-                window.name_of_optional_obligatory=[];  //把數過的課程清空       
-                agenda_count=[[0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0]];
-                agenda_name_count=[[{},{},{},{},{},{},{},{},{},{},{},{},{}],[{},{},{},{},{},{},{},{},{},{},{},{},{}],[{},{},{},{},{},{},{},{},{},{},{},{},{}],[{},{},{},{},{},{},{},{},{},{},{},{},{}],[{},{},{},{},{},{},{},{},{},{},{},{},{}]];
-                user=[];
-                json_num=0;
+                window.name_of_optional_obligatory=[];  //把數過的課程清空 
+                if(demo_mode==1)
+                {
+                    agenda_count=[[0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0]];
+                    agenda_name_count=[[{},{},{},{},{},{},{},{},{},{},{},{},{}],[{},{},{},{},{},{},{},{},{},{},{},{},{}],[{},{},{},{},{},{},{},{},{},{},{},{},{}],[{},{},{},{},{},{},{},{},{},{},{},{},{}],[{},{},{},{},{},{},{},{},{},{},{},{},{}]];
+                    json_num=0;
+                    fileName="";
+                    $('.file_name.submit1').attr("value","尚未選擇檔案");
+                    $('.upload_file_name.submit1').empty();
+                    $('.file.not_upload_file_name').empty();
+                    localStorage.clear(); 
+                }      
+                else
+                {
+                    modify_agenda_count=[[0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0]];
+                    $('.file_name.submit2').attr("value","尚未選擇檔案");
+                    $('.upload_file_name.submit2').empty();
+                    $('.modify_file.not_upload_file_name').empty();
+                    modify_userName="";
+                    modify_userDept="";
+                }
                 obj=[];
                 files=[];
-                fileName="";
                 $('#name_box_content').attr({'style':''});
                 $('#name_box_content').html('');
                 //用localStorage.clear()才能徹底清除localstorage
-                localStorage.clear(); 
             } 
         })(jQuery);
