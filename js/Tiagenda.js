@@ -20,7 +20,6 @@
                     window.current_name="" //存放目前json的name 
                     window.td_mode=1;
                     window.download_access=0;//window.download_access=0;判斷是否有新增或修改
-
                     //用localStorage.length判斷,在firefox或chrome都沒問題
                     //如果判斷localstorage是否為空,firefox會有問題
                     if(localStorage.length!=0)
@@ -48,6 +47,7 @@
                     window.current_name="" //存放目前json的name 
                     window.td_mode=1;
                     window.download_access=0;//判斷是否有新增或修改
+                    $(".store").toggle("slow");
                 } 
                
                 $(".clear-button").click(function()
@@ -203,13 +203,14 @@
             $(".demo").click(function(){    
                 demo_click(agenda_count,json_num,"#time-table1","#profile");
                 td_mode=1;
-
+                $(".store").hide("slow");
             });
             $(".demo2").click(function(){  
                 //判斷是哪一個tab
                 demo_click(modify_agenda_count,1,"#time-table2","#profile2");
                 td_mode=2;
                 download_access=1;
+                $(".store").show("slow");
             });
             window.demo_click = function(count,num,table,profile){
                 $("td").html('<div><span></span></div>');
