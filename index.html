@@ -64,49 +64,49 @@
         table, th, tr, td, tbody, thead{
             border: 1px solid black;
         }
-        #time-table tbody th
+        .time-table tbody th
         {
             white-space: nowrap;
             font-size: 100%;
             height:55px;
         }
-        #time-table th
+        .time-table th
         {
             text-align: center;
             vertical-align:middle;
         }
-        #time-table td
+        .time-table td
          {
              text-align: center;
              vertical-align:middle;
          }
-         #time-table td span
+         .time-table td span
          {
              color: #DDD;
          }
-         #time-table td span:hover,
-         #time-table td span:focus
+         .time-table td span:hover,
+         .time-table td span:focus
          {
              background-color: transparent;
              color: #666;
         }
-        #time-table button.btn-link
+        .time-table button.btn-link
         {
             text-align: center;
             color:black;
         }
-        #time-table div.title
+        .time-table div.title
         {
             text-align: center;
             font-size: 120%;
             padding-bottom: 3px;
         }
-        #time-table div.location
+        .time-table div.location
         {
             text-align: left;
             font-size: 80%;
         }
-        #time-table div.professor
+        .time-table div.professor
         {
             text-align: right;
             font-size: 80%;
@@ -289,7 +289,7 @@
                                     </div>
                                     <input class="file file_name submit1" value="尚未選擇檔案" disabled="disabled" />
                                     <button type="reset" id="submit1" class="btn btn-default ">開始上傳</button>
-                                    <button input type="button" class="btn btn-success demo_model" id="demo">
+                                    <button input type="button" class="btn btn-success demo_model demo">
                                         <span class="fa fa-check-circle fa-1x fa-fw "></span>分析
                                     </button>
                                 </form>
@@ -366,7 +366,8 @@
                   <!-- Nav tabs -->
                   <ul class="nav nav-pills" role="tablist">
                     <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">使用方法</a></li>
-                    <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">分析結果</a></li>
+                    <li role="presentation"><a class="demo" href="#profile" aria-controls="profile" role="tab" data-toggle="tab">分析結果</a></li>
+                    <li role="presentation"><a class="demo2" href="#profile2" aria-controls="profile" role="tab" data-toggle="tab">新增|修改</a></li>
                   </ul>
                   <!-- Tab panes -->
                   <div class="tab-content">
@@ -423,7 +424,156 @@
                         </div>
                     </div>
                     <div role="tabpanel" class="tab-pane fade" id="profile">
-                        <div id="time-table">
+                        <div id="time-table1" class="time-table">
+                            <table class="table table-striped table-hover table-condensed">
+                                <thead>
+                                    <tr class="info">
+                                        <th style="width: 10%">時間</th>
+                                        <th style="width: 18%">一</th>
+                                        <th style="width: 18%">二</th>
+                                        <th style="width: 18%">三</th>
+                                        <th style="width: 18%">四</th>
+                                        <th style="width: 18%">五</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr data-hour="1" class="active">
+                                        <th>
+                                            <h3>8:00</h3>
+                                        </th>
+                                        <td data-day="1"><div><span></span></div></td>
+                                        <td data-day="2"><div><span></span></div></td>
+                                        <td data-day="3"><div><span></span></div></td>
+                                        <td data-day="4"><div><span></span></div></td>
+                                        <td data-day="5"><div><span></span></div></td>
+                                    </tr>
+                                    <tr data-hour="2" class="active">
+                                        <th>
+                                            <h3>9:00</h3>
+                                        </th>
+                                        <td data-day="1"><div><span></span></div></td>
+                                        <td data-day="2"><div><span></span></div></td>
+                                        <td data-day="3"><div><span></span></div></td>
+                                        <td data-day="4"><div><span></span></div></td>
+                                        <td data-day="5"><div><span></span></div></td>
+                                    </tr>
+                                    <tr data-hour="3" class="active">
+                                        <th>
+                                            <h3>10:00</h3>
+                                        </th>
+                                        <td data-day="1"><div><span></span></div></td>
+                                        <td data-day="2"><div><span></span></div></td>
+                                        <td data-day="3"><div><span></span></div></td>
+                                        <td data-day="4"><div><span></span></div></td>
+                                        <td data-day="5"><div><span></span></div></td>
+                                    </tr>
+                                    <tr data-hour="4" class="active">
+                                        <th>
+                                            <h3>11:00</h3>
+                                        </th>
+                                        <td data-day="1"><div><span></span></div></td>
+                                        <td data-day="2"><div><span></span></div></td>
+                                        <td data-day="3"><div><span></span></div></td>
+                                        <td data-day="4"><div><span></span></div></td>
+                                        <td data-day="5"><div><span></span></div></td>
+                                    </tr>
+                                    <tr data-hour="5" class="active">
+                                        <th>
+                                            <h3>13:00</h3>
+                                        </th>
+                                        <td data-day="1"><div><span></span></div></td>
+                                        <td data-day="2"><div><span></span></div></td>
+                                        <td data-day="3"><div><span></span></div></td>
+                                        <td data-day="4"><div><span></span></div></td>
+                                        <td data-day="5"><div><span></span></div></td>
+                                    </tr>
+                                    <tr data-hour="6" class="active">
+                                        <th>
+                                            <h3>14:00</h3>
+                                        </th>
+                                        <td data-day="1"><div><span></span></div></td>
+                                        <td data-day="2"><div><span></span></div></td>
+                                        <td data-day="3"><div><span></span></div></td>
+                                        <td data-day="4"><div><span></span></div></td>
+                                        <td data-day="5"><div><span></span></div></td>
+
+                                    </tr>
+                                    <tr data-hour="7" class="active">
+                                        <th>
+                                            <h3>15:00</h3>
+                                        </th>
+                                        <td data-day="1"><div><span></span></div></td>
+                                        <td data-day="2"><div><span></span></div></td>
+                                        <td data-day="3"><div><span></span></div></td>
+                                        <td data-day="4"><div><span></span></div></td>
+                                        <td data-day="5"><div><span></span></div></td>
+                                    <tr data-hour="8" class="active">
+                                        <th>
+                                            <h3>16:00</h3>
+                                        </th>
+                                        <td data-day="1"><div><span></span></div></td>
+                                        <td data-day="2"><div><span></span></div></td>
+                                        <td data-day="3"><div><span></span></div></td>
+                                        <td data-day="4"><div><span></span></div></td>
+                                        <td data-day="5"><div><span></span></div></td>
+
+                                    </tr>
+                                    <tr data-hour="9" class="active">
+                                        <th>
+                                            <h3>17:00</h3>
+                                        </th>
+                                        <td data-day="1"><div><span></span></div></td>
+                                        <td data-day="2"><div><span></span></div></td>
+                                        <td data-day="3"><div><span></span></div></td>
+                                        <td data-day="4"><div><span></span></div></td>
+                                        <td data-day="5"><div><span></span></div></td>
+                                    </tr>
+                                    <tr data-hour="10" class="active">
+                                        <th>
+                                            <h3>18:00</h3>
+                                        </th>
+                                        <td data-day="1"><div><span></span></div></td>
+                                        <td data-day="2"><div><span></span></div></td>
+                                        <td data-day="3"><div><span></span></div></td>
+                                        <td data-day="4"><div><span></span></div></td>
+                                        <td data-day="5"><div><span></span></div></td>
+                                    </tr>
+                                    <tr data-hour="11" class="active">
+                                        <th>
+                                            <h3>19:00</h3>
+                                        </th>
+                                        <td data-day="1"><div><span></span></div></td>
+                                        <td data-day="2"><div><span></span></div></td>
+                                        <td data-day="3"><div><span></span></div></td>
+                                        <td data-day="4"><div><span></span></div></td>
+                                        <td data-day="5"><div><span></span></div></td>
+                                    </tr>
+                                    <tr data-hour="12" class="active">
+                                        <th>
+                                            <h3>20:00</h3>
+                                        </th>
+                                        <td data-day="1"><div><span></span></div></td>
+                                        <td data-day="2"><div><span></span></div></td>
+                                        <td data-day="3"><div><span></span></div></td>
+                                        <td data-day="4"><div><span></span></div></td>
+                                        <td data-day="5"><div><span></span></div></td>
+                                    </tr>
+                                    <tr data-hour="13" class="active">
+                                        <th>
+                                            <h3>21:00</h3>
+                                        </th>
+                                        <td data-day="1"><div><span></span></div></td>
+                                        <td data-day="2"><div><span></span></div></td>
+                                        <td data-day="3"><div><span></span></div></td>
+                                        <td data-day="4"><div><span></span></div></td>
+                                        <td data-day="5"><div><span></span></div></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane fade" id="profile2">
+                        <div id="time-table2" class="time-table">
                             <table class="table table-striped table-hover table-condensed">
                                 <thead>
                                     <tr class="info">
@@ -459,55 +609,46 @@
                                     <tr data-hour="3" class="active">
                                         <th>
                                             <h3>3</h3>
-
                                         </th>
                                         <td data-day="1"><div><span></span></div></td>
                                         <td data-day="2"><div><span></span></div></td>
                                         <td data-day="3"><div><span></span></div></td>
                                         <td data-day="4"><div><span></span></div></td>
                                         <td data-day="5"><div><span></span></div></td>
-
                                     </tr>
                                     <tr data-hour="4" class="active">
                                         <th>
                                             <h3>4</h3>
-
                                         </th>
                                         <td data-day="1"><div><span></span></div></td>
                                         <td data-day="2"><div><span></span></div></td>
                                         <td data-day="3"><div><span></span></div></td>
                                         <td data-day="4"><div><span></span></div></td>
                                         <td data-day="5"><div><span></span></div></td>
-
                                     </tr>
                                     <tr data-hour="5" class="active">
                                         <th>
                                             <h3>5</h3>
-
                                         </th>
                                         <td data-day="1"><div><span></span></div></td>
                                         <td data-day="2"><div><span></span></div></td>
                                         <td data-day="3"><div><span></span></div></td>
                                         <td data-day="4"><div><span></span></div></td>
                                         <td data-day="5"><div><span></span></div></td>
-
                                     </tr>
                                     <tr data-hour="6" class="active">
                                         <th>
                                             <h3>6</h3>
-
                                         </th>
                                         <td data-day="1"><div><span></span></div></td>
                                         <td data-day="2"><div><span></span></div></td>
                                         <td data-day="3"><div><span></span></div></td>
                                         <td data-day="4"><div><span></span></div></td>
                                         <td data-day="5"><div><span></span></div></td>
-
                                     </tr>
                                     <tr data-hour="7" class="active">
                                         <th>
                                             <h3>7</h3>
-
                                         </th>
                                         <td data-day="1"><div><span></span></div></td>
                                         <td data-day="2"><div><span></span></div></td>
@@ -523,7 +664,6 @@
                                         <td data-day="3"><div><span></span></div></td>
                                         <td data-day="4"><div><span></span></div></td>
                                         <td data-day="5"><div><span></span></div></td>
-
                                     </tr>
                                     <tr data-hour="9" class="active">
                                         <th>
